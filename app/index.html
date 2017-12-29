@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]>      <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, width=device-width, initial-scale=1">
+        <title>Abrale Log</title>
+        <meta name="description" content="AngularJS Template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico">
+        <link href="/images/favicon.ico" rel="shortcut icon" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/dist/css/AdminLTE.min.css">
+
+        <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/skins/_all-skins.min.css">
+        <!-- Google Font -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+        <link rel="stylesheet" type="text/css" href="style/loading.css"/>
+        <link rel="stylesheet" type="text/css" href="style/custom.css"/>
+
+
+    </head>
+
+    <body data-ng-controller="IndexController as IC" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+
+        <div>
+            <header data-ui-view="header"></header>
+            <nav data-ui-view="menu" role="navigation"></nav>
+            <section data-ui-view="breadcrumbs"></section>
+            <section data-ui-view="content"></section>
+            <footer data-ui-view="footer"></footer>
+        </div>
+
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        <script src="build/angularjs-template-x.x.x.min.js></script>
+        -->
+        <!-- Bower scripts: -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-animate.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
+        <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+
+        <!-- Application scripts: -->
+        <script src="core/app.js"></script>
+        <script src="core/app.routes.js"></script>
+        <script src="core/controller/index.js"></script>
+        <script src="core/controller/conversa.js"></script>
+        <script src="common/filters/filterConfianca.js"></script>
+        <script src="common/filters/filterTreinamento.js"></script>
+
+        <script type="text/javascript">
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
+            jQuery(document).ready(function($){
+                if(!isMobile) {
+                  $( "<style>.custom-dialog .modal-dialog { width :20%; min-width: 600px;}</style>" ).appendTo( "head" );
+                }
+            });
+
+            $(function(){
+              $('.box_limiteAltura') .css({'height': (($(window).height()) - 300)+'px'});
+              $(window).bind('resize', function(){
+                $('.box_limiteAltura') .css({'height': (($(window).height()) - 300)+'px'});
+              });
+            });
+        </script>
+        <!-- FastClick -->
+        <script src="https://adminlte.io/themes/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="https://adminlte.io/themes/AdminLTE/dist/js/adminlte.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="https://adminlte.io/themes/AdminLTE/dist/js/demo.js"></script>
+
+    </body>
+</html>

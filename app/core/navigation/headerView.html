@@ -1,0 +1,38 @@
+<header class="main-header">
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" style="margin-left: 0px;">
+        <div class="logo"><img alt="" class="image-logo" src="/images/logo_home.png" width="95"></div>
+        <div class="titulo">Monitoramento / Treinamento</div>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="hidden-xs"> {{usuariologado}}</span>
+                    </a>
+                </li>
+                <!-- MENU
+                <li class="dropdown tasks-menu">
+                    <a href="#" data-toggle="dropdown"><i class="fa fa-gears"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="header">Menu</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user fa-fw"></i><span style="color: black;">Cadastrar usuario</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                FIM MENU-->
+                <li class="dropdown tasks-menu" >
+                    <a href="#" data-toggle="dropdown" ng-click="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
