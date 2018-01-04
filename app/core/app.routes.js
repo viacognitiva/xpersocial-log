@@ -34,8 +34,8 @@
                     },
                     'menu': {
                         templateUrl: 'core/navigation/menuView.html',
-                        controller: '',
-                        controllerAs: ''
+                        controller: 'menuController',
+                        controllerAs: 'MC'
                     },
                     'breadcrumbs': {
                         templateUrl: 'core/navigation/breadcrumbsView.html',

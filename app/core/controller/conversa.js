@@ -4,27 +4,41 @@
     angular.module('app.conversa', ['ngAnimate','ngSanitize','ui.bootstrap'])
         .controller('conversaController', conversaController);
 
-        conversaController.$inject = ['$scope','$log','$http','$filter','$uibModal','$window'];
+        conversaController.$inject = ['$rootScope','$scope','$log','$http','$filter','$uibModal','$window'];
 
-        function conversaController($scope,$log,$http,$filter,$uibModal,$window) {
+        function conversaController($rootScope,$scope,$log,$http,$filter,$uibModal,$window) {
 
             console.log('conversaController');
 
-            var vm = this;
-            vm.buscar = buscar;
+            var vm      = this;
+            vm.buscar   = buscar;
+            vm.sort_by  = sort_by;
+            vm.showDown = showDown;
+            vm.showUp   = showUp;
+
+            vm.modalEntidade    = modalEntidade;
+            vm.toggleSelection  = toggleSelection;
+            vm.modalIntencao    = modalIntencao;
+
+            vm.opcaoTreinamento = ["Sim", "Não"];
+            vm.tpTreinamento    = ["Intenção", "Entidade"];
+            vm.prcConfianca     = ["10", "20","30","40","50","60","70","80","90","100"];
+            vm.sinalMaiorMenor  = ["<=", ">="];
+            vm.selection        = [];
+
+            vm.mostrarbtnInt = false;
+            vm.mostrarbtnEnt = false;
+            vm.disableBtnTreinarIntencao = true;
+            vm.disableBtnTreinarEntidade = true;
+
+            $scope.sortType     = 'name';
+            $scope.sortReverse  = true;
 
             buscar();
 
-            vm.opcaoTreinamento = ["Sim", "Não"];
-            vm.tpTreinamento = ["Intenção", "Entidade"];
-            vm.prcConfianca = ["10", "20","30","40","50","60","70","80","90","100"];
-            vm.sinalMaiorMenor = ["<=", ">="];
-
             function buscar() {
 
-                console.log('conversaController - buscar');
-
-                $scope.loading = true;
+                $rootScope.loading = true;
 
                 $http.get('/api/logconversation/treinamento').then(function(response) {
 
@@ -69,224 +83,95 @@
                     vm.filteredItems = retorno;
 
                     if(retorno.length==0 ){
-                        vm.errorMessage='Registro não encontrado.';
+                        $rootScope.errorMessage='Registro não encontrado.';
                     } else {
-                        vm.errorMessage='';
+                        $rootScope.errorMessage='';
                     }
 
-                    $scope.loading = false;
+                    $rootScope.loading = false;
 
                 });
             };
 
-            $scope.usuario = function(){
+            function toggleSelection (id) {
 
-                $scope.loading          = true;
-                $scope.mostrarUsuario   = false;
-                $scope.mostrarChat      = true;
-                $scope.mostrarOutros    = true;
-                $scope.searchFish       = '';
-                $scope.errorMessage     = '';
+                var idx = vm.selection.indexOf(id);
 
-                $scope.showbtnOutros    = false;
-                $scope.showbtnUsers     = true;
-                $scope.showbtnChat      = false;
+                if (idx > -1) {
+                    vm.selection.splice(idx, 1);
+                } else {
+                    vm.selection.push(id);
+                }
 
-                $scope.mostrarbtnInt    = true;
-                $scope.mostrarbtnEnt    = true;
-
-                $scope.tipo             = '';
-                var retorno             = [];
-
-                $http.get('/api/logconversation/usuarios').then(
-
-                    function(response){
-
-                        var data = response.data;
-
-                        angular.forEach(data.rows, function(item){
-
-                            var jsonParam = {};
-
-                            jsonParam.nome = item.doc.nome;
-                            jsonParam.email = item.doc.email;
-                            jsonParam.fone = item.doc.telefone;
-                            jsonParam.data = $filter('date')(new Date(item.doc.data), "dd/MM/yyyy HH:mm:ss");
-
-                            if(!angular.equals(jsonParam, {})){
-                                retorno.push(jsonParam);
-                            }
-
-                        });
-
-                        $scope.itemUsuario = retorno;
-                        $scope.filteredUsuario = retorno;
-
-                        if(retorno.length==0 ){
-                            vm.errorMessage='Registro não encontrado.';
-                        } else {
-                            vm.errorMessage='';
-                        }
-                    },
-
-                    function(erro){
-                        console.log(erro);
-                        res.status(500).json(erro);
-                    }
-                );
-
-                $scope.loading = false;
+                if(vm.selection.length>0){
+                    vm.disableBtnTreinarIntencao = false;
+                    vm.disableBtnTreinarEntidade = false;
+                } else {
+                    vm.disableBtnTreinarIntencao = true;
+                    vm.disableBtnTreinarEntidade = true;
+                }
             };
 
-            $scope.outros = function(){
-
-                $scope.loading          = true;
-                $scope.mostrarUsuario   = true;
-                $scope.mostrarChat      = true;
-                $scope.mostrarOutros    = false;
-                $scope.searchFish       = '';
-                $scope.errorMessage     = '';
-
-                $scope.showbtnOutros    = true;
-                $scope.showbtnUsers     = false;
-                $scope.showbtnChat      = false;
-
-                $scope.mostrarbtnInt    = false;
-                $scope.mostrarbtnEnt    = false;
-
-                $scope.tipo             = 'outros';
-                var retorno             = [];
-
-                $http.get('/api/logconversation/outros').then(
-
-                    function(response){
-
-                        var data = response.data;
-
-                        angular.forEach(data.rows, function(item){
-
-                            var jsonParam = {};
-                            jsonParam.id = item.doc._id;
-                            jsonParam.idchat = item.doc.idchat;
-                            jsonParam.msgUser = item.doc.texto;
-                            jsonParam.data = $filter('date')(new Date(item.doc.data), "dd/MM/yyyy HH:mm:ss");
-
-                            if(!angular.equals(jsonParam, {})){
-                                retorno.push(jsonParam);
-                            }
-
-                        });
-
-                        $scope.itemOutros = retorno;
-                        $scope.filteredOutros = retorno;
-
-                        if(retorno.length==0 ){
-                            $scope.errorMessage='Registro não encontrado.';
-                        } else {
-                            $scope.errorMessage='';
-                        }
-                    },
-
-                    function(erro){
-                        console.log(erro);
-                        res.status(500).json(erro);
-                    }
-                );
-
-                $scope.loading = false;
-
-            };
-
-            $scope.logout = function() {
-                $window.location.href='/';
-            };
-
-            $scope.isNumber = angular.isNumber;
-
-            $scope.sort_by = function(newSortingOrder) {
+            function sort_by(newSortingOrder) {
                 $scope.sortReverse = ($scope.sortType === newSortingOrder) ? !$scope.sortReverse : false;
                 $scope.sortType = newSortingOrder;
             };
 
-            $scope.showDown = function(newSortingOrder) {
+            function showDown(newSortingOrder) {
                 return $scope.sortType == newSortingOrder && !$scope.sortReverse
             };
 
-            $scope.showUp = function(newSortingOrder) {
+            function showUp(newSortingOrder) {
                 return $scope.sortType == newSortingOrder && $scope.sortReverse
             };
 
-            $scope.selection = [];
-
-            // Toggle selection
-            $scope.toggleSelection = function (id) {
-
-                var idx = $scope.selection.indexOf(id);
-
-                //Is currently selected
-                if (idx > -1) {
-                    $scope.selection.splice(idx, 1);
-                } else {
-                    $scope.selection.push(id);
-                }
-
-                if($scope.selection.length>0){
-                    $scope.disableBtnTreinarIntencao = false;
-                    $scope.disableBtnTreinarEntidade = false;
-                } else {
-                    $scope.disableBtnTreinarIntencao = true;
-                    $scope.disableBtnTreinarEntidade = true;
-                }
-            };
-
-            $scope.aplicar = function () {
-
-                angular.forEach($scope.selection, function(sel){
-                    console.log('checksboxx'+sel)
-                });
-            };
-
-            var $ctrl = this;
-
-            $scope.modalEntidade = function(size) {
-
-                if($scope.tipo =='chat'){
-                    $scope.parametro='entidade';
-                }else{
-                    $scope.parametro='textoEnt';
-                }
+            function modalEntidade(size) {
 
                 $uibModal.open({
                     scope: $scope,
                     animation: true,
                     controllerAs: '$ctrl',
-                    // Esse vai exibir o nome do scope atual
-                    templateUrl: 'myModalEntidade.html',
-                    controller: 'ModalInstanceCtrl',
+                    templateUrl: 'core/navigation/modalEnt.html',
+                    controller: 'modalController',
                     windowClass: 'custom-dialog',
                     backdrop:false,
                     size: size,
+                    resolve: {
+                        valPar: function(){
+                            return 'entidade';
+                        },
+                        valSel: function () {
+                           return vm.selection;
+                         },
+                         valItem: function(){
+                            return vm.items;
+                         }
+                    }
                 });
             };
 
-            $scope.modalIntencao = function(size) {
-
-                if($scope.tipo =='chat'){
-                    $scope.parametro='intencao';
-                }else{
-                    $scope.parametro='textoInt';
-                }
+            function modalIntencao(size) {
 
                 $uibModal.open({
                     scope: $scope,
                     animation: true,
                     controllerAs: '$ctrl',
-                    // Esse vai exibir o nome do scope atual
-                    templateUrl: 'myModalIntencao.html',
-                    controller: 'ModalInstanceCtrl',
+                    templateUrl: 'core/navigation/modalInt.html',
+                    controller: 'modalController',
                     windowClass: 'custom-dialog',
                     backdrop:false,
                     size: size,
+                    resolve: {
+                        valPar: function(){
+                            return 'intencao';
+                        },
+                        valSel: function () {
+                           return vm.selection;
+                         },
+                         valItem: function(){
+                            return vm.items;
+                         }
+                    }
                 });
             };
 

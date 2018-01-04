@@ -7,5 +7,7 @@
         'app.conversa',
         'app.filtersC',
         'app.filtersT',
+        'app.nav.menu',
+        'app.modal'
     ]);
 })();

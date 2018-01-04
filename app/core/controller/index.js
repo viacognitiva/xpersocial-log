@@ -3,9 +3,9 @@
 
     angular.module('app.index',[]).controller('IndexController', IndexController);
 
-    IndexController.$inject = ['$log'];
+    IndexController.$inject = ['$scope','$log'];
 
-    function IndexController($log) {
+    function IndexController($scope, $log) {
 
         console.log('index-controller')
 

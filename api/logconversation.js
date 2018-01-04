@@ -5,8 +5,8 @@ var express = require('express');
 var app = express();
 app.set('port', process.env.PORT || 2000);
 
-var username = process.env.USERNAME;
-var password = process.env.PASSWORD;
+var wts_username = process.env.WTS_USERNAME;
+var wts_password = process.env.WTS_PASSWORD;
 var apiHostname = process.env.APIHOSTNAME;
 var workspacesId = process.env.WORKSPACE_ID;
 var protocol = process.env.NODE_ENV == 'production' ? "https" : "http" ;
@@ -17,8 +17,7 @@ var logConversation = {
 
         const baseQuery = '/conversation/api/v1/workspaces/'+ workspacesId + '/logs';
         const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
-        console.log('logConversation.get');
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.get(fullUrl,function(err,resp,body){
 
@@ -35,8 +34,7 @@ var logConversation = {
 
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities';
         const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
-        console.log(fullUrl);
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.get(fullUrl,function(err,resp,body){
 
@@ -52,8 +50,7 @@ var logConversation = {
 
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/intents';
         const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
-        console.log(fullUrl);
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.get(fullUrl,function(err,resp,body){
 
@@ -71,8 +68,7 @@ var logConversation = {
         const intent =  req.body.intencao;
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/intents/' + intent + '/examples';
         const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
-        console.log(fullUrl);
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.post({
             headers: { "Content-Type": "application/json"},
@@ -92,7 +88,7 @@ var logConversation = {
         const entity =  req.body.entidade;
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values';
         const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.post(
             {
@@ -115,7 +111,7 @@ var logConversation = {
         const entity=req.params.entity;
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values';
         const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.get(fullUrl,function(err,resp,body){
             if(err){
@@ -132,7 +128,7 @@ var logConversation = {
 
         const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values/' + value + '/synonyms';
         const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + username + ':' + password + '@' + apiHostname + baseQuery + '?' + version;
+        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
 
         request.post(
             {
