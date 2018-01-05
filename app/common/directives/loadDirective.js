@@ -10,7 +10,7 @@
         var directive = {
             restrict: 'E',
             replace: true,
-            template: '<div class="loading"><img src="/images/ajax-loader.gif" width="20" height="20" /> Aguarde ...</div>',
+            template: '<div class="loading"><img src="assets/images/ajax-loader.gif" width="20" height="20" /> Aguarde ...</div>',
             link: loadFunction
         };
 
