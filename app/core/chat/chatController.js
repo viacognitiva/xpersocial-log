@@ -1,14 +1,14 @@
 (function () {
     'use strict';
 
-    angular.module('app.conversa', ['ngAnimate','ngSanitize','ui.bootstrap'])
-        .controller('conversaController', conversaController);
+    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
+        .controller('chatController', chatController);
 
-        conversaController.$inject = ['$rootScope','$scope','$log','$http','$filter','$uibModal','$window'];
+        chatController.$inject = ['$rootScope','$scope','$log','$http','$filter','$uibModal','$window','chatService'];
 
-        function conversaController($rootScope,$scope,$log,$http,$filter,$uibModal,$window) {
+        function chatController($rootScope,$scope,$log,$http,$filter,$uibModal,$window,chatService) {
 
-            console.log('conversaController');
+            console.log('chatController');
 
             var vm      = this;
             vm.buscar   = buscar;
@@ -40,6 +40,8 @@
 
                 $rootScope.loading = true;
 
+                vm.items = chatService.getChat();
+                /*
                 $http.get('/api/logconversation/treinamento').then(function(response) {
 
                     var retorno = [];
@@ -87,10 +89,9 @@
                     } else {
                         $rootScope.errorMessage='';
                     }
-
-                    $rootScope.loading = false;
-
                 });
+                */
+                $rootScope.loading = false;
             };
 
             function toggleSelection (id) {

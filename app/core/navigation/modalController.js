@@ -27,175 +27,152 @@
             $ctrl.ok = function() {
 
                 limpar();
+                console.log('valPar:' + valPar);
 
                 if(valPar=='intencao'){
 
+                    angular.forEach(valItem, function(item){
+
+                        if(item.id==valSel){
+
+                            var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                            var data = {
+                                intencao: $scope.selectedIntencao ,
+                                message: item.msgUser
+                            };
+
+                            $http.post('/api/logconversation/intencao',JSON.stringify(data),config).then(
+
+                                function(response){
+
+                                    if(response.status==200){
+                                        if(response.data.error){
+                                            $ctrl.errorMessage=""+response.data.error;
+                                        } else {
+                                            $ctrl.sucessoMessage="Intenção associada com sucesso.";
+                                            var data1 = { idLog:sel };
+                                            $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config)
+                                            .then(function(response){
+                                                if(response.status==201){
+                                                    $scope.buscar();
+                                                }
+                                                },
+                                                function(error){
+                                                    console.log('Error:' + JSON.stringify(error));
+                                                }
+                                            );
+                                        }
+                                    }
+                                },
+                                function(error){
+                                    console.log('Error:' + JSON.stringify(error));
+                                    $ctrl.errorMessage = 'Error:' + JSON.stringify(error)
+                                }
+                            );
+                        }//fim do if
+                    });
+
+                } else if(valPar=='entidade'){
+
                     if($scope.selection.length==0){
                         $ctrl.errorMessage="Selecione na tabela algum registro.";
-                    }else{
 
-                        angular.forEach($scope.selection, function(sel){
+                    } else {
 
-                            angular.forEach(valItem, function(item){
+                        angular.forEach(valItem, function(sel){
 
-                                if(item.id==sel){
+                            if(item.id == sel){
 
-                                    var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+
+                                if($ctrl.defineVlrSin=='Sinonimo'){
+
                                     var data = {
-                                        intencao: $scope.selectedIntencao ,
-                                        message: item.msgUser
+                                        entidade: $scope.selectedEntidade ,
+                                        valor: $ctrl.selectedEntidadeValue,
+                                        sinonimo: item.msgUser,
+                                        idLog:sel
                                     };
 
-                                    $http.post('/api/logconversation/intencao',JSON.stringify(data),config).then(
+                                    $http.post('/api/logconversation/entidade/synonyms',JSON.stringify(data),config).then(
 
                                         function(response){
 
                                             if(response.status==200){
+
                                                 if(response.data.error){
                                                     $ctrl.errorMessage=""+response.data.error;
-                                                } else {
-                                                    $ctrl.sucessoMessage="Intenção associada com sucesso.";
+
+                                                }else {
                                                     var data1 = { idLog:sel };
-                                                    $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config)
-                                                    .then(function(response){
-                                                        console.log('Sucesso /api/logconversation/treinamento/status' + response);
-                                                        if(response.status==201){
-                                                            $scope.buscar();
+                                                    $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
+
+                                                        function(response){
+                                                            $ctrl.sucessoMessage="Sinonimo criado com sucesso.";
+
+                                                            if(response.status==201){
+                                                                $scope.buscar();
+                                                            }
+                                                        },
+                                                        function(error){
+                                                            $ctrl.errorMessage = "Erro";
+                                                            console.log('Error:' + JSON.stringify(error));
                                                         }
-                                                    },
-                                                    function(response){
-                                                        console.log('Erro '+response);
-                                                    }
+                                                    );
+                                                }
+                                            }
+                                        },
+                                        function(error){
+                                            console.log('Error: ' + JSON.stringify(error));
+                                            $ctrl.errorMessage="Error " + JSON.stringify(error);
+                                        }
+                                    );
+
+                                } else {
+
+                                    var data = {
+                                        entidade: $scope.selectedEntidade ,
+                                        valor: item.msgUser,
+                                        id:sel
+                                    };
+
+                                    $http.post('/api/logconversation/entidade',JSON.stringify(data),config).then(
+                                        function(response){
+
+                                            if(response.status==200){
+
+                                                if(response.data.error){
+                                                    $ctrl.errorMessage=""+response.data.error;
+
+                                                } else {
+
+                                                    var data1 = { idLog:sel };
+                                                    $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
+                                                        function(response){
+                                                            $ctrl.sucessoMessage="Valor da Entidade criado com sucesso.";
+                                                            if(response.status==201){
+                                                                $scope.buscar();
+                                                            }
+                                                        },
+                                                        function(error){
+                                                            console.log('Erro ' + error);
+                                                            $ctrl.errorMessage="Error " + error;
+                                                         }
                                                     );
                                                 }
                                             }
                                         },
                                         function(erro){
-                                            console.log('Erro ' + erro);
-                                            $ctrl.errorMessage="Error" + erro;
+                                            console.log('Erro '+erro);
+                                            $ctrl.errorMessage="Error"+erro;
                                         }
                                     );
-                                }//fim do if
-                            });
+                                }
+                            }//fim do if
                         });
                     }//fim do else
                 }
-
-                if($scope.parametro=='entidade' || $scope.parametro=='textoEnt'){
-
-                    if($scope.parametro=='entidade'){
-                        angular.forEach($scope.items, function(its){
-                            valores.push(its);
-                        });
-                    } else {
-                        angular.forEach($scope.itemOutros, function(its){
-                            valores.push(its);
-                        });
-                    }
-
-                    if($scope.selection.length==0){
-                        $ctrl.errorMessage="Selecione na tabela algum registro.";
-
-                    } else {
-
-                        angular.forEach($scope.selection, function(sel){
-
-                            angular.forEach(valores, function(item){
-
-                                if(item.id == sel){
-
-                                    var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
-
-                                    if($ctrl.defineVlrSin=='Sinonimo'){
-
-                                        var data = {
-                                            entidade: $scope.selectedEntidade ,
-                                            valor: $ctrl.selectedEntidadeValue,
-                                            sinonimo: item.msgUser,
-                                            idLog:sel
-                                        };
-                                        console.log(JSON.stringify(data));
-                                        $http.post('/api/logconversation/entidade/synonyms',JSON.stringify(data),config).then(
-
-                                            function(response){
-
-                                                if(response.status==200){
-
-                                                    if(response.data.error){
-                                                        $ctrl.errorMessage=""+response.data.error;
-
-                                                    }else {
-                                                        var data1 = { idLog:sel };
-                                                        $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
-
-                                                            function(response){
-                                                                $ctrl.sucessoMessage="Sinonimo criado com sucesso.";
-                                                                //console.log('Sucesso ' + JSON.stringify(response));
-
-                                                                if(response.status==201){
-                                                                    $scope.buscar();
-                                                                }
-                                                            },
-                                                            function(erro){
-                                                                $ctrl.errorMessage = "Erro";
-                                                                //console.log('Erro ' + JSON.stringify(erro));
-                                                            }
-                                                        );
-                                                    }
-                                                }
-                                            },
-                                            function(erro){
-                                                console.log('Erro '+ erro);
-                                                $ctrl.errorMessage="Error " + erro;
-                                            }
-                                        );
-
-                                    } else {
-
-                                        var data = {
-                                            entidade: $scope.selectedEntidade ,
-                                            valor: item.msgUser,
-                                            id:sel
-                                        };
-
-                                        $http.post('/api/logconversation/entidade',JSON.stringify(data),config).then(
-                                            function(response){
-
-                                                if(response.status==200){
-
-                                                    if(response.data.error){
-                                                        $ctrl.errorMessage=""+response.data.error;
-
-                                                    } else {
-
-                                                        var data1 = { idLog:sel };
-                                                        $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
-                                                            function(response){
-                                                                $ctrl.sucessoMessage="Valor da Entidade criado com sucesso.";
-                                                                if(response.status==201){
-                                                                    $scope.buscar();
-                                                                }
-                                                            },
-                                                            function(error){
-                                                                console.log('Erro ' + error);
-                                                                $ctrl.errorMessage="Error " + error;
-                                                             }
-                                                        );
-                                                    }
-                                                }
-                                            },
-                                            function(erro){
-                                                console.log('Erro '+erro);
-                                                $ctrl.errorMessage="Error"+erro;
-                                            }
-                                        );
-                                    }
-                                }//fim do if
-                            });
-                        });
-                    }//fim do else
-                }
-            };
+            }; //FIM OK
 
             if(valPar=='entidade'){
 

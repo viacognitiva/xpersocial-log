@@ -8,10 +8,10 @@
 
         console.log('app.router');
 
-        $urlRouterProvider.when('', '/conversa/list');
-        $urlRouterProvider.when('/', '/conversa/list');
-        $urlRouterProvider.when('/conversa', '/conversa/list');
-        $urlRouterProvider.when('/conversa/', '/conversa/list');
+        $urlRouterProvider.when('', '/chat/list');
+        $urlRouterProvider.when('/', '/chat/list');
+        $urlRouterProvider.when('/chat', '/chat/list');
+        $urlRouterProvider.when('/chat/', '/chat/list');
         $urlRouterProvider.when('/usuario', '/usuario/list');
         $urlRouterProvider.when('/usuario/', '/usuario/list');
 
@@ -52,15 +52,15 @@
                     }
                 }
             })
-            .state('root.conversa', {
+            .state('root.chat', {
                 abstract: true,
-                url: 'conversa',
+                url: 'chat',
                 data: {
                     title: 'Conversas',
                     breadcrumb: 'Conversas'
                 }
             })
-            .state('root.conversa.list', {
+            .state('root.chat.list', {
                 url: '/list',
                 data: {
                     title: 'To-do list',
@@ -68,8 +68,8 @@
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'core/navigation/conversa.html',
-                        controller: 'conversaController',
+                        templateUrl: 'core/chat/chat.html',
+                        controller: 'chatController',
                         controllerAs: 'CC'
                     }
                 }

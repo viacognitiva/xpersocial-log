@@ -4,7 +4,7 @@
     angular.module('app', [
         'ui.router',
         'app.index',
-        'app.conversa',
+        'app.chat',
         'app.filtersC',
         'app.filtersT',
         'app.nav.menu',
