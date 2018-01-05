@@ -8,6 +8,7 @@
         'app.filtersC',
         'app.filtersT',
         'app.nav.menu',
-        'app.modal'
+        'app.modal',
+        'app.directives.loading'
     ]);
 })();

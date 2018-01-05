@@ -4,9 +4,9 @@
     angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$filter','$uibModal','$window','chatService'];
+        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','chatService'];
 
-        function chatController($rootScope,$scope,$log,$http,$filter,$uibModal,$window,chatService) {
+        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,chatService) {
 
             console.log('chatController');
 
@@ -31,66 +31,26 @@
             vm.disableBtnTreinarIntencao = true;
             vm.disableBtnTreinarEntidade = true;
 
+            vm.items = [];
+
             $scope.sortType     = 'name';
             $scope.sortReverse  = true;
 
             buscar();
 
+            function getJson() {
+                return chatService.getChat().then(function(data) {
+                    vm.items = data;
+
+                });
+            }
+
             function buscar() {
 
                 $rootScope.loading = true;
 
-                vm.items = chatService.getChat();
-                /*
-                $http.get('/api/logconversation/treinamento').then(function(response) {
+                getJson();
 
-                    var retorno = [];
-                    var data = response.data;
-                    var pos = 0;
-
-                    angular.forEach(data.docs, function(item){
-
-                        var jsonParam = {};
-                        angular.forEach(item.response.entities, function(ent){
-                            jsonParam.entidade = ent.entity;
-                            jsonParam.confidenceEntidade =parseFloat((ent.confidence*100).toFixed(2)) ;
-                        });
-
-                        angular.forEach(item.response.intents, function(int){
-                          jsonParam.intencao = int.intent;
-                          jsonParam.confidenceIntencao = parseFloat((int.confidence*100).toFixed(2)) ;
-                        });
-
-                        angular.forEach(item.response.input, function(text){
-                            if(text.length!=0)jsonParam.msgUser = text;
-                        });
-
-                        if(item.response.context.conversation_id.length!=0){
-                            jsonParam.conversation_id = item.response.context.conversation_id;
-                            jsonParam.data = $filter('date')(item.response_timestamp, "dd/MM/yyyy HH:mm:ss");
-                            jsonParam.id=item.log_id;
-                            jsonParam.treinado=item.treinado;
-                        }
-
-                        if(!angular.equals(jsonParam, {})){
-                            retorno.push(jsonParam);
-                        }
-                    });
-
-                    if(retorno.length!=0){
-                        retorno.push({selected: {}});
-                    }
-
-                    vm.items = retorno;
-                    vm.filteredItems = retorno;
-
-                    if(retorno.length==0 ){
-                        $rootScope.errorMessage='Registro não encontrado.';
-                    } else {
-                        $rootScope.errorMessage='';
-                    }
-                });
-                */
                 $rootScope.loading = false;
             };
 
