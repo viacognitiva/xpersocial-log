@@ -2,9 +2,9 @@
 
     <div class="box-body">
 
-        <button ng-click="chat()" class="btn btn-primary" ng-hide="showbtnChat">  <i class="fa fa-comment fa-fw"></i>  Visualizar Conversas</button>
-        <button ng-click="usuario()" class="btn btn-primary" ng-hide="showbtnUsers">  <i class="fa fa-user fa-fw"></i>  Visualizar Usuários</button>
-        <button ng-click="outros()" class="btn btn-primary" ng-hide="showbtnOutros">  <i class="fa fa-bug fa-fw"></i>  Visualizar Outros</button>
+        <button ng-click="MC.getClass('root.chat.list')" class="btn btn-primary" ng-hide="showbtnChat">  <i class="fa fa-comment fa-fw"></i>  Visualizar Conversas</button>
+        <button ng-click="MC.getClass('root.user.list')" class="btn btn-primary" ng-hide="showbtnUsers">  <i class="fa fa-user fa-fw"></i>  Visualizar Usuários</button>
+        <button ng-click="MC.getClass('root.bug.list')" class="btn btn-primary" ng-hide="showbtnOutros">  <i class="fa fa-bug fa-fw"></i>  Visualizar Outros</button>
         <!--<button ng-click="aplicar()" class="btn btn-info pull-right">Aplicar</button>-->
         <div ng-hide="mostrarChat" style="display: none;">
             <span class="acuracidade" >

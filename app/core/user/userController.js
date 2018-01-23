@@ -1,45 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
-        .controller('chatController', chatController);
+    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','app.userService'])
+        .controller('userController', userController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','chatService'];
+        userController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','userService'];
 
-        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,chatService) {
+        function userController($rootScope,$scope,$log,$http,$uibModal,$window,userService) {
 
-            console.log('chatController');
+            console.log('userController');
 
-            var vm      = this;
-            vm.buscar   = buscar;
-            vm.sort_by  = sort_by;
-            vm.showDown = showDown;
-            vm.showUp   = showUp;
-
-            vm.modalEntidade    = modalEntidade;
-            vm.toggleSelection  = toggleSelection;
-            vm.modalIntencao    = modalIntencao;
-
-            vm.opcaoTreinamento = ["Sim", "Não"];
-            vm.tpTreinamento    = ["Intenção", "Entidade"];
-            vm.prcConfianca     = ["10", "20","30","40","50","60","70","80","90","100"];
-            vm.sinalMaiorMenor  = ["<=", ">="];
-            vm.selection        = [];
-
-            vm.mostrarbtnInt = false;
-            vm.mostrarbtnEnt = false;
-            vm.disableBtnTreinarIntencao = true;
-            vm.disableBtnTreinarEntidade = true;
-
-            vm.items = [];
-
-            $scope.sortType     = 'name';
-            $scope.sortReverse  = true;
+            var vm = this;
 
             buscar();
 
             function getJson() {
-                return chatService.getChat().then(function(data) {
+                return userService.getUser().then(function(data) {
                     vm.items = data;
                 });
             }

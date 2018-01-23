@@ -5,6 +5,7 @@
         'ui.router',
         'app.index',
         'app.chat',
+        'app.user',
         'app.filtersC',
         'app.filtersT',
         'app.nav.menu',
