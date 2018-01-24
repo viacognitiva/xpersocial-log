@@ -2,8 +2,7 @@
     'use strict';
 
     angular.module('app.filtersT', [])
-
-            .filter('filterTreinamento', filterTreinamento);
+        .filter('filterTreinamento', filterTreinamento);
 
     filterTreinamento.$inject = [];
 
@@ -15,15 +14,15 @@
             var condicao =  treinado == 'Sim' ? true  : false;
 
             if(!treinado){//se treinado is undifenid
-               angular.forEach(items, function(item) {
-                         filtered.push(item);
+                angular.forEach(items, function(item) {
+                    filtered.push(item);
                 });
-               return filtered;
+                return filtered;
             }
             angular.forEach(items, function(item) {
-              if( condicao == item.treinado ) {
-                filtered.push(item);
-              }
+                if( condicao == item.treinado ) {
+                    filtered.push(item);
+                }
             });
             return filtered;
         };

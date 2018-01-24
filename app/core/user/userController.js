@@ -11,6 +11,9 @@
             console.log('userController');
 
             var vm = this;
+            vm.sort_byU  = sort_by;
+            vm.showDownU = showDown;
+            vm.showUpU = showUp;
 
             buscar();
 
@@ -27,25 +30,6 @@
                 getJson();
 
                 $rootScope.loading = false;
-            };
-
-            function toggleSelection (id) {
-
-                var idx = vm.selection.indexOf(id);
-
-                if (idx > -1) {
-                    vm.selection.splice(idx, 1);
-                } else {
-                    vm.selection.push(id);
-                }
-
-                if(vm.selection.length>0){
-                    vm.disableBtnTreinarIntencao = false;
-                    vm.disableBtnTreinarEntidade = false;
-                } else {
-                    vm.disableBtnTreinarIntencao = true;
-                    vm.disableBtnTreinarEntidade = true;
-                }
             };
 
             function sort_by(newSortingOrder) {

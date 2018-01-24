@@ -2,8 +2,7 @@
     'use strict';
 
     angular.module('app.filtersC', [])
-
-            .filter('filterConfianca', filterConfianca);
+        .filter('filterConfianca', filterConfianca);
 
     filterConfianca.$inject = [];
 
@@ -16,18 +15,18 @@
             if(!sinal || !porcentagem || !tpTreinamento ){
                 angular.forEach(items, function(item) {
                     filtered.push(item);
-                 });
-                 return filtered;
+                });
+                return filtered;
             }
 
             if(tpTreinamento=='Entidade') {
                 if(sinal=='<='){
-                  angular.forEach(items, function(item) {
-                      if( item.confidenceEntidade <= porcentagem  ) {
-                        filtered.push(item);
-                      }
-                   });
-                  return filtered;
+                    angular.forEach(items, function(item) {
+                        if( item.confidenceEntidade <= porcentagem  ) {
+                            filtered.push(item);
+                        }
+                    });
+                    return filtered;
                 } else if (sinal=='>='){
                     angular.forEach(items, function(item) {
                         if(item.confidenceEntidade >= porcentagem ) {

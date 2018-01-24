@@ -82,7 +82,6 @@
                     breadcrumb: 'Usuários'
                 }
             })
-
             .state('root.user.list', {
                 url: '/list',
                 data: {

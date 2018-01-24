@@ -7,6 +7,10 @@ var logconversation = require('./api/logconversation.js');
 app.get('/api/logconversation/treinamento', function (req, res) {
     cloudant.getLogTreinamento(req, res);
 });
+/*USUÁRIO.JS*/
+app.get('/api/logconversation/usuarios', function (req, res) {
+    cloudant.getUsuarios(req, res);
+});
 
 /*MODAL.JS*/
 app.get('/api/logconversation/entities', function (req, res) {
@@ -28,7 +32,6 @@ app.get('/api/logconversation/intencoes', function (req, res) {
 app.post('/api/logconversation/intencao', function (req, res) {
     logconversation.treinaIntencao(req, res);
 });
-
 
 app.post('/api/logconversation/treinamento/status', function (req, res) {
     cloudant.atualizaStatusTreinamento(req, res);

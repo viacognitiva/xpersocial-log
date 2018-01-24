@@ -97,24 +97,25 @@
                             </a></div>
                         </th>
                         <th>Treino<div style="text-align: center;"><a href="#">
-                            Treino</a></div></th>
+                            Treino</a></div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-ng-repeat="item in CC.items | filter: searchFish | filterTreinamento:selectedOpcaoTreinamento | filterConfianca:selectedSinalMaiorMenor:selectedPrcConfianca:selectedTpTreinamento | orderBy:sortType:sortReverse">
-                        <td>
-                            <input type="checkbox" name="CC.selectedItem[]"  value="{{item.id}}" ng-checked="CC.selection.indexOf(item.id) > -1" ng-click="CC.toggleSelection(item.id)">
-                        </td>
-                        <td>{{item.conversation_id}}</td>
-                        <td>{{item.msgUser}}</td>
-                        <td style="text-align: center;">{{item.confidenceIntencao}} <span ng-show="isNumber(item.confidenceIntencao)">%</span></td>
-                        <td>{{item.intencao}}</td>
-                        <td style="text-align: center;">{{item.confidenceEntidade}} <span ng-show="isNumber(item.confidenceEntidade)">%</span></td>
-                        <td>{{item.entidade}}</td>
-                        <td>{{item.data}}</td>
-                        <td style="text-align: center;"><span ng-show="{{item.treinado}}" class="fa fa-check" aria-hidden="true"> </span></td>
-                        <!--<td>{{item.id}}</td>-->
-                    </tr>
+                        <tr data-ng-repeat="item in CC.items | filter: searchFish | filterTreinamento:selectedOpcaoTreinamento | filterConfianca:selectedSinalMaiorMenor:selectedPrcConfianca:selectedTpTreinamento | orderBy:sortType:sortReverse">
+                            <td>
+                                <input type="checkbox" name="CC.selectedItem[]"  value="{{item.id}}" ng-checked="CC.selection.indexOf(item.id) > -1" ng-click="CC.toggleSelection(item.id)">
+                            </td>
+                            <td>{{item.conversation_id}}</td>
+                            <td>{{item.msgUser}}</td>
+                            <td style="text-align: center;">{{item.confidenceIntencao}} <span ng-show="isNumber(item.confidenceIntencao)">%</span></td>
+                            <td>{{item.intencao}}</td>
+                            <td style="text-align: center;">{{item.confidenceEntidade}} <span ng-show="isNumber(item.confidenceEntidade)">%</span></td>
+                            <td>{{item.entidade}}</td>
+                            <td>{{item.data}}</td>
+                            <td style="text-align: center;"><span ng-show="{{item.treinado}}" class="fa fa-check" aria-hidden="true"> </span></td>
+                            <!--<td>{{item.id}}</td>-->
+                        </tr>
                     </tbody>
                 </table>
             </div>
