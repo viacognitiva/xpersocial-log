@@ -8,8 +8,6 @@
 
         function chatController($rootScope,$scope,$log,$http,$uibModal,$window,chatService) {
 
-            console.log('chatController');
-
             var vm      = this;
             vm.buscar   = buscar;
             vm.sort_by  = sort_by;
@@ -33,8 +31,8 @@
 
             vm.items = [];
 
-            $scope.sortType     = 'name';
-            $scope.sortReverse  = true;
+            vm.sortType     = 'name';
+            vm.sortReverse  = true;
 
             buscar();
 
@@ -45,11 +43,8 @@
             }
 
             function buscar() {
-
                 $rootScope.loading = true;
-
                 getJson();
-
                 $rootScope.loading = false;
             };
 
@@ -73,16 +68,16 @@
             };
 
             function sort_by(newSortingOrder) {
-                $scope.sortReverse = ($scope.sortType === newSortingOrder) ? !$scope.sortReverse : false;
-                $scope.sortType = newSortingOrder;
+                vm.sortReverse = (vm.sortType === newSortingOrder) ? !vm.sortReverse : false;
+                vm.sortType = newSortingOrder;
             };
 
             function showDown(newSortingOrder) {
-                return $scope.sortType == newSortingOrder && !$scope.sortReverse
+                return vm.sortType == newSortingOrder && !vm.sortReverse
             };
 
             function showUp(newSortingOrder) {
-                return $scope.sortType == newSortingOrder && $scope.sortReverse
+                return vm.sortType == newSortingOrder && vm.sortReverse
             };
 
             function modalEntidade(size) {

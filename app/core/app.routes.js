@@ -6,16 +6,11 @@
 
     function config($stateProvider, $urlRouterProvider) {
 
-        console.log('app.router');
-
-        $urlRouterProvider.when('', '/chat/list');
         $urlRouterProvider.when('/', '/chat/list');
         $urlRouterProvider.when('/chat', '/chat/list');
         $urlRouterProvider.when('/chat/', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
         $urlRouterProvider.when('/user/', '/user/list');
-
-        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('root', {
@@ -79,7 +74,7 @@
                 url: 'user',
                 data: {
                     title: 'Usuários',
-                    breadcrumb: 'Usuários'
+                    breadcrumb: 'List'
                 }
             })
             .state('root.user.list', {

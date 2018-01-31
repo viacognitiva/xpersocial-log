@@ -1,48 +1,65 @@
 (function () {
     'use strict';
 
-    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','app.userService'])
+    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','app.userService'])
         .controller('userController', userController);
 
-        userController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','userService'];
+        userController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','userService'];
 
-        function userController($rootScope,$scope,$log,$http,$uibModal,$window,userService) {
-
-            console.log('userController');
+        function userController($rootScope,$scope,$log,$http,$uibModal,$window,$mdDialog,userService) {
 
             var vm = this;
             vm.sort_byU  = sort_by;
             vm.showDownU = showDown;
             vm.showUpU = showUp;
+            vm.showAlert = showAlert;
+
+            vm.items = [];
+
+            vm.sortTypeU     = 'nome';
+            vm.sortReverseU  = true;
 
             buscar();
+
+            function showAlert(ev) {
+
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Abrale')
+                    .textContent('Teste prompt.')
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('Got it!')
+                    .targetEvent(ev)
+                );
+            };
 
             function getJson() {
                 return userService.getUser().then(function(data) {
                     vm.items = data;
                 });
-            }
+            };
 
             function buscar() {
-
                 $rootScope.loading = true;
-
                 getJson();
-
                 $rootScope.loading = false;
             };
 
             function sort_by(newSortingOrder) {
-                $scope.sortReverse = ($scope.sortType === newSortingOrder) ? !$scope.sortReverse : false;
-                $scope.sortType = newSortingOrder;
+
+                console.log('sort_by:' + newSortingOrder);
+                vm.sortReverseU = (vm.sortTypeU === newSortingOrder) ? !vm.sortReverseU : false;
+                vm.sortTypeU = newSortingOrder;
             };
 
             function showDown(newSortingOrder) {
-                return $scope.sortType == newSortingOrder && !$scope.sortReverse
+                return vm.sortTypeU == newSortingOrder && !vm.sortReverseU
             };
 
             function showUp(newSortingOrder) {
-                return $scope.sortType == newSortingOrder && $scope.sortReverse
+                return vm.sortTypeU == newSortingOrder && vm.sortReverseU
             };
 
             function modalEntidade(size) {

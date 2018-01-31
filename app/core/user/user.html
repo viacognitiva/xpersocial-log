@@ -8,6 +8,12 @@
                 <input type="text" class="form-control" placeholder="Digite a busca desejada..." ng-model="searchFish" style="width:350px">
             </div>
         </div>
+        <div class="col-lg-4">
+            <md-button class="md-primary md-raised" ng-click="UC.showAlert($event)">Alert Dialog</md-button>
+        </div>
+        <div class="col-lg-4">
+            <a href="#">ok</a>
+        </div>
     </div>
     <br>
     <div class="tabela">
@@ -46,7 +52,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="item in UC.items | orderBy:sortType:sortReverse | filter:searchFish | filterTreinamento:selectedOpcaoTreinamento | filterConfianca:selectedSinalMaiorMenor:selectedPrcConfianca:selectedTpTreinamento " >
+                <tr data-ng-repeat="item in UC.items | orderBy:UC.sortTypeU:UC.sortReverseU | filter:searchFish" class="repeat-animation">
                     <td>{{item.nome}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.fone}}</td>

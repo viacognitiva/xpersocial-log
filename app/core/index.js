@@ -7,7 +7,5 @@
 
     function IndexController($scope, $log) {
 
-        console.log('index-controller')
-
     }
 })();

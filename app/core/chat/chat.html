@@ -15,8 +15,7 @@
                           <span class="input-group-addon">
                             <label>Confiança</label>
                           </span>
-                        <select ng-model="selectedSinalMaiorMenor" style="width: 60px;" class="form-control" ng-options="x for x in CC.sinalMaiorMenor">
-                            <option value="">-</option></select>
+                        <select ng-model="selectedSinalMaiorMenor" style="width: 60px;" class="form-control" ng-options="x for x in CC.sinalMaiorMenor"><option value="">-</option></select>
                         <select ng-model="selectedPrcConfianca" style="width: 70px;" class="form-control" ng-options="x for x in CC.prcConfianca"><option value="">-</option> </select>
                         <select ng-model="selectedTpTreinamento" style="width: 100px;" class="form-control" ng-options="x for x in CC.tpTreinamento"><option value="">-</option> </select>
                     </div>
@@ -26,7 +25,7 @@
                           <span class="input-group-addon">
                             <label>Treinamento</label>
                           </span>
-                        <select ng-model="selectedOpcaoTreinamento" style="width: 70px;" class="form-control" ng-options="x for x in CC.opcaoTreinamento"><option value="">-</option> </select>
+                        <select ng-model="selectedOpcaoTreinamento" style="width: 70px;" class="form-control" ng-options="x for x in CC.opcaoTreinamento"><option value="">-</option></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -102,7 +101,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr data-ng-repeat="item in CC.items | filter: searchFish | filterTreinamento:selectedOpcaoTreinamento | filterConfianca:selectedSinalMaiorMenor:selectedPrcConfianca:selectedTpTreinamento | orderBy:sortType:sortReverse">
+                        <tr data-ng-repeat="item in CC.items | filter: searchFish | filterTreinamento:selectedOpcaoTreinamento | filterConfianca:selectedSinalMaiorMenor:selectedPrcConfianca:selectedTpTreinamento | orderBy:CC.sortType:CC.sortReverse">
                             <td>
                                 <input type="checkbox" name="CC.selectedItem[]"  value="{{item.id}}" ng-checked="CC.selection.indexOf(item.id) > -1" ng-click="CC.toggleSelection(item.id)">
                             </td>
