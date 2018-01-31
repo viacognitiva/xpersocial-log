@@ -11,7 +11,10 @@ app.get('/api/logconversation/treinamento', function (req, res) {
 app.get('/api/logconversation/usuarios', function (req, res) {
     cloudant.getUsuarios(req, res);
 });
-
+/*OUTROS.JS*/
+app.get('/api/logconversation/outros', function (req, res) {
+    cloudant.getOutros(req, res);
+});
 /*MODAL.JS*/
 app.get('/api/logconversation/entities', function (req, res) {
     logconversation.getEntidades(req, res);
@@ -36,7 +39,6 @@ app.post('/api/logconversation/intencao', function (req, res) {
 app.post('/api/logconversation/treinamento/status', function (req, res) {
     cloudant.atualizaStatusTreinamento(req, res);
 });
-
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));

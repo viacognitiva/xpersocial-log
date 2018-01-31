@@ -1,50 +1,64 @@
 (function () {
     'use strict';
 
-    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','app.userService'])
-        .controller('userController', userController);
+    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','app.outrosService'])
+        .controller('outrosController', outrosController);
 
-        userController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','userService'];
+        outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','outrosService'];
 
-        function userController($rootScope,$scope,$log,$http,$uibModal,$window,$mdDialog,userService) {
+        function outrosController($rootScope,$scope,$log,$http,$uibModal,$window,outrosService) {
 
-            var vm = this;
+            var vm      = this;
+            vm.buscar   = buscar;
             vm.sort_by  = sort_by;
             vm.showDown = showDown;
-            vm.showUp = showUp;
-            vm.showAlert = showAlert;
+            vm.showUp   = showUp;
+
+            vm.modalEntidade    = modalEntidade;
+            vm.toggleSelection  = toggleSelection;
+            vm.modalIntencao    = modalIntencao;
+
+            vm.mostrarbtnInt = false;
+            vm.mostrarbtnEnt = false;
+            vm.disableBtnTreinarIntencao = true;
+            vm.disableBtnTreinarEntidade = true;
 
             vm.items = [];
 
-            vm.sortType     = 'nome';
+            vm.sortType     = 'name';
             vm.sortReverse  = true;
 
             buscar();
 
-            function showAlert(ev) {
-
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#popupContainer')))
-                    .clickOutsideToClose(true)
-                    .title('Abrale')
-                    .textContent('Teste prompt.')
-                    .ariaLabel('Alert Dialog Demo')
-                    .ok('Got it!')
-                    .targetEvent(ev)
-                );
-            };
-
             function getJson() {
-                return userService.getUser().then(function(data) {
+                return outrosService.getOutros().then(function(data) {
                     vm.items = data;
                 });
-            };
+            }
 
             function buscar() {
                 $rootScope.loading = true;
                 getJson();
                 $rootScope.loading = false;
+            };
+
+            function toggleSelection (id) {
+
+                var idx = vm.selection.indexOf(id);
+
+                if (idx > -1) {
+                    vm.selection.splice(idx, 1);
+                } else {
+                    vm.selection.push(id);
+                }
+
+                if(vm.selection.length>0){
+                    vm.disableBtnTreinarIntencao = false;
+                    vm.disableBtnTreinarEntidade = false;
+                } else {
+                    vm.disableBtnTreinarIntencao = true;
+                    vm.disableBtnTreinarEntidade = true;
+                }
             };
 
             function sort_by(newSortingOrder) {

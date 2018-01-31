@@ -90,6 +90,28 @@
                         controllerAs: 'UC'
                     }
                 }
+            })
+            .state('root.outros', {
+                abstract: true,
+                url: 'outros',
+                data: {
+                    title: 'Outros',
+                    breadcrumb: 'List'
+                }
+            })
+            .state('root.outros.list', {
+                url: '/list',
+                data: {
+                    title: 'Outros',
+                    breadcrumb: 'Outros'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'core/outros/outros.html',
+                        controller: 'outrosController',
+                        controllerAs: 'OC'
+                    }
+                }
             });
 
     }
