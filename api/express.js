@@ -1,13 +1,15 @@
 var	express	= require('express');
 var	bodyParser = require('body-parser');
 var helmet = require('helmet');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 require('dotenv-safe').load();
 
 module.exports = function() {
 
     var	app	= express();
-    app.set('port',3000);
+    app.set('port', process.env.PORT || 3000);
 
     //middleware
     app.use(express.static('./app'));
@@ -22,5 +24,14 @@ module.exports = function() {
     app.use(helmet.xssFilter()); //bloqueia o uso de XSS
     app.use(helmet.noSniff()); // não permite o carregamento de MIME types inválidos
 
-	return	app;
+    app.use(cookieParser());
+
+    app.use(session({
+      secret: 'keyboard cat',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {}
+    }))
+
+	return app;
 };

@@ -4,6 +4,7 @@
     angular.module('app', [
         'ui.router',
         'app.index',
+        'app.login',
         'app.chat',
         'app.user',
         'app.outros',

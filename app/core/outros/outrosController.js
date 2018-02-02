@@ -22,6 +22,7 @@
             vm.mostrarbtnEnt = false;
             vm.disableBtnTreinarIntencao = true;
             vm.disableBtnTreinarEntidade = true;
+            vm.selection = [];
 
             vm.items = [];
 

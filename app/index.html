@@ -34,7 +34,7 @@
     <body data-ng-controller="IndexController as IC" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
 
         <div>
-            <loading></loading>
+            <section data-ui-view="login"></section>
             <header data-ui-view="header"></header>
             <nav data-ui-view="menu" role="navigation"></nav>
             <section data-ui-view="breadcrumbs"></section>
@@ -53,14 +53,13 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-animate.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
-        <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 
         <!-- Angular Material Library -->
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
@@ -69,6 +68,7 @@
         <script src="core/app.js"></script>
         <script src="core/app.routes.js"></script>
         <script src="core/index.js"></script>
+        <script src="core/login/loginController.js"></script>
         <script src="core/chat/chatController.js"></script>
         <script src="core/chat/chatService.js"></script>
         <script src="core/user/userController.js"></script>

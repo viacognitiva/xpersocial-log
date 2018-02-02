@@ -6,11 +6,9 @@
 
     function config($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.when('/', '/chat/list');
         $urlRouterProvider.when('/chat', '/chat/list');
-        $urlRouterProvider.when('/chat/', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
-        $urlRouterProvider.when('/user/', '/user/list');
+        $urlRouterProvider.when('/outros', '/outros/list');
 
         $stateProvider
             .state('root', {
@@ -59,13 +57,17 @@
                 url: '/list',
                 data: {
                     title: 'Conversas',
-                    breadcrumb: 'List'
+                    breadcrumb: 'Conversas'
                 },
                 views: {
                     'content@': {
                         templateUrl: 'core/chat/chat.html',
                         controller: 'chatController',
-                        controllerAs: 'CC'
+                        controllerAs: 'CC',
+                        restrictions: {
+                            ensureAuthenticated: true,
+                            loginRedirect: false
+                        }
                     }
                 }
             })
@@ -74,7 +76,7 @@
                 url: 'user',
                 data: {
                     title: 'Usuários',
-                    breadcrumb: 'List'
+                    breadcrumb: 'Usuários'
                 }
             })
             .state('root.user.list', {
@@ -87,7 +89,11 @@
                     'content@': {
                         templateUrl: 'core/user/user.html',
                         controller: 'userController',
-                        controllerAs: 'UC'
+                        controllerAs: 'UC',
+                        restrictions: {
+                            ensureAuthenticated: true,
+                            loginRedirect: false
+                        }
                     }
                 }
             })
@@ -96,7 +102,7 @@
                 url: 'outros',
                 data: {
                     title: 'Outros',
-                    breadcrumb: 'List'
+                    breadcrumb: 'Outros'
                 }
             })
             .state('root.outros.list', {
@@ -109,7 +115,11 @@
                     'content@': {
                         templateUrl: 'core/outros/outros.html',
                         controller: 'outrosController',
-                        controllerAs: 'OC'
+                        controllerAs: 'OC',
+                        restrictions: {
+                            ensureAuthenticated: true,
+                            loginRedirect: false
+                        }
                     }
                 }
             });

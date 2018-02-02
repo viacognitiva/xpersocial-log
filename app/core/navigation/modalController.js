@@ -8,8 +8,6 @@
 
         function modalController($scope,$uibModalInstance,$http,valPar,valSel,valItem) {
 
-            console.log('modalController');
-
             var $ctrl = this;
             $ctrl.defineVlrSin = 'Valor';
             limpar();
@@ -27,7 +25,6 @@
             $ctrl.ok = function() {
 
                 limpar();
-                console.log('valPar:' + valPar);
 
                 if(valPar=='intencao'){
 
@@ -86,7 +83,7 @@
                                     entidade: $scope.selectedEntidade ,
                                     valor: $ctrl.selectedEntidadeValue,
                                     sinonimo: item.msgUser,
-                                    idLog:sel
+                                    idLog:valSel
                                 };
 
                                 $http.post('/api/logconversation/entidade/synonyms',JSON.stringify(data),config).then(
@@ -128,7 +125,7 @@
                                 var data = {
                                     entidade: $scope.selectedEntidade ,
                                     valor: item.msgUser,
-                                    id:sel
+                                    id:valSel
                                 };
 
                                 $http.post('/api/logconversation/entidade',JSON.stringify(data),config).then(
