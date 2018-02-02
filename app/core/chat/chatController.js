@@ -43,9 +43,9 @@
             }
 
             function buscar() {
-                $rootScope.loading = true;
+                $scope.loading = true;
                 getJson();
-                $rootScope.loading = false;
+                $scope.loading = false;
             };
 
             function toggleSelection (id) {

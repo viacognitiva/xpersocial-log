@@ -16,10 +16,12 @@
 
         return directive;
 
-        function loadFunction(rootScope, element, attrs) {
+        function loadFunction(scope, element, attrs) {
 
-            console.log('app.directives.loading');
-            $rootScope.$watch('loading', function (val) {
+            scope.$watch('loading', function (val) {
+
+                console.log('app.directives.loading');
+
                 if (val)
                    $(element).show();
                 else
