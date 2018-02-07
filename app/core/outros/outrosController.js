@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','app.outrosService'])
+    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','cgBusy','app.outrosService'])
         .controller('outrosController', outrosController);
 
         outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','outrosService'];
@@ -38,9 +38,7 @@
             }
 
             function buscar() {
-                $rootScope.loading = true;
-                getJson();
-                $rootScope.loading = false;
+                $scope.myPromise = getJson();
             };
 
             function toggleSelection (id) {

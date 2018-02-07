@@ -1,6 +1,5 @@
-<loading></loading>
 <div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
-<div class="box-body">
+<div>
     <div class="row">
         <div class="col-lg-3">
             <div class="input-group">
@@ -36,14 +35,14 @@
         </div>
     </div>
 </div>
-<div class="box-body">
+<div class="box-body" cg-busy="{promise:myPromise,message:'Carregando',backdrop:true,templateUrl:'core/navigation/loading.html',delay:300,minDuration:1000}">
     <div class="tabela">
-        <div class="box_limiteAltura">
+        <div class="box_limiteAltura" div-size>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th><a href="#" > </a>
-                        <div><a href="#" > </a></div>
+                        <div><a href="#"> </a></div>
                     </th>
                     <th>ID da Conversa
                         <div><a href="#" ng-click="CC.sort_by('conversation_id')">

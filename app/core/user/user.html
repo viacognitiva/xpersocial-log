@@ -1,4 +1,3 @@
-<loading></loading>
 <div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
 <div class="box-body">
     <div class="row">
@@ -13,9 +12,9 @@
         <!--md-button class="md-primary md-raised" ng-click="UC.showAlert($event)">Alert Dialog</md-button!-->
     </div>
 </div>
-<div class="box-body">
+<div class="box-body" cg-busy="{promise:myPromise,message:'Carregando',backdrop:true,templateUrl:'core/navigation/loading.html',delay:300,minDuration:1000}">
     <div class="tabela">
-        <div class="box_limiteAltura">
+        <div class="box_limiteAltura" div-size>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

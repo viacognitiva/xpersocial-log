@@ -16,13 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.6.8",
-    "angular-animate": "^1.6.8",
-    "angular-ui-router": "^1.0.12",
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.2.1",
-    "jquery-ui": "^1.12.1",
-    "angular-sanitize": "^1.6.8",
-    "ui-bootstrap": "^2.5.6"
+    "angular-busy": "^4.1.4"
   }
 }

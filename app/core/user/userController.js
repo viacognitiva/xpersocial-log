@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','app.userService'])
+    angular.module('app.user', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','cgBusy','app.userService'])
         .controller('userController', userController);
 
         userController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','userService'];
@@ -42,9 +42,7 @@
             };
 
             function buscar() {
-                $rootScope.loading = true;
-                getJson();
-                $rootScope.loading = false;
+                $scope.myPromise = getJson();
             };
 
             function sort_by(newSortingOrder) {

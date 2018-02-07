@@ -26,6 +26,9 @@
         <!-- Angular Material style sheet -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 
+        <!--Angular Busy -->
+        <link rel="stylesheet" type="text/css" href="bower_components/angular-busy/dist/angular-busy.css"/>
+
         <link rel="stylesheet" type="text/css" href="assets/css/loading.css"/>
         <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
 
@@ -64,6 +67,9 @@
         <!-- Angular Material Library -->
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
+        <!--Angular Busy -->
+        <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
+
         <!-- Application scripts: -->
         <script src="core/app.js"></script>
         <script src="core/app.routes.js"></script>
@@ -79,7 +85,7 @@
         <script src="core/navigation/modalController.js"></script>
         <script src="common/filters/filterConfianca.js"></script>
         <script src="common/filters/filterTreinamento.js"></script>
-        <script src="common/directives/loadDirective.js"></script>
+        <script src="common/directives/divSizeDirective.js"></script>
 
         <script type="text/javascript">
             var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
@@ -87,13 +93,6 @@
                 if(!isMobile) {
                   $( "<style>.custom-dialog .modal-dialog { width :20%; min-width: 600px;}</style>" ).appendTo( "head" );
                 }
-            });
-
-            $(function(){
-              $('.box_limiteAltura') .css({'height': (($(window).height()) - 300)+'px'});
-              $(window).bind('resize', function(){
-                $('.box_limiteAltura') .css({'height': (($(window).height()) - 300)+'px'});
-              });
             });
         </script>
         <!-- FastClick -->

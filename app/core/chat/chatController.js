@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
+    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','cgBusy','app.chatService'])
         .controller('chatController', chatController);
 
         chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','chatService'];
@@ -43,9 +43,7 @@
             }
 
             function buscar() {
-                $scope.loading = true;
-                getJson();
-                $scope.loading = false;
+                $scope.myPromise = getJson();
             };
 
             function toggleSelection (id) {

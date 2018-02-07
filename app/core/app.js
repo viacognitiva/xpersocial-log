@@ -12,6 +12,6 @@
         'app.filtersT',
         'app.nav.menu',
         'app.modal',
-        'app.directives.loading'
+        'app.directives.divSize'
     ]);
 })();
