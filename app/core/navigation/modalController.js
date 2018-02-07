@@ -47,7 +47,7 @@
                                             $ctrl.errorMessage=""+response.data.error;
                                         } else {
                                             $ctrl.sucessoMessage="Intenção associada com sucesso.";
-                                            var data1 = { idLog:sel };
+                                            var data1 = { idLog:valSel };
                                             $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config)
                                             .then(function(response){
                                                 if(response.status==201){
@@ -96,7 +96,7 @@
                                                 $ctrl.errorMessage=""+response.data.error;
 
                                             }else {
-                                                var data1 = { idLog:sel };
+                                                var data1 = { idLog:valSel };
                                                 $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
 
                                                     function(response){
@@ -138,7 +138,7 @@
 
                                             } else {
 
-                                                var data1 = { idLog:sel };
+                                                var data1 = { idLog:valSel };
                                                 $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
                                                     function(response){
                                                         $ctrl.sucessoMessage="Valor da Entidade criado com sucesso.";

@@ -9,10 +9,16 @@
         $urlRouterProvider.when('/chat', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
         $urlRouterProvider.when('/outros', '/outros/list');
+        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: 'core/login/login.html',
+                controller: 'loginController',
+                controllerAs: 'LC'
+            })
             .state('root', {
-
                 abstract: true,
                 url: '/',
                 data: {
