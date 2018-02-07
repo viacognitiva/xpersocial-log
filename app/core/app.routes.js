@@ -9,7 +9,6 @@
         $urlRouterProvider.when('/chat', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
         $urlRouterProvider.when('/outros', '/outros/list');
-        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
             .state('login', {
