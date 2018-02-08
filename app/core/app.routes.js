@@ -15,7 +15,11 @@
                 url: '/login',
                 templateUrl: 'core/login/login.html',
                 controller: 'loginController',
-                controllerAs: 'LC'
+                controllerAs: 'LC',
+                restrictions: {
+                    ensureAuthenticated: true,
+                    loginRedirect: false
+                }
             })
             .state('root', {
                 abstract: true,
@@ -130,4 +134,21 @@
             });
 
     }
+
+    function routeStart($rootScope, $location, $route) {
+
+        $rootScope.$on('$routeChangeStart', (event, next, current) => {
+            if (next.restrictions.ensureAuthenticated) {
+                if (!localStorage.getItem('token')) {
+                    $location.path('/login');
+                }
+            }
+            if (next.restrictions.loginRedirect) {
+                if (localStorage.getItem('token')) {
+                    $location.path('/chat');
+                }
+            }
+        });
+    }
+
 })();

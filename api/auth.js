@@ -1,5 +1,5 @@
 var jwt = require('jwt-simple');
-var cloudant = require('../cloudant.js');
+var cloudant = require('./cloudant.js');
 
 var auth = {
 
@@ -65,7 +65,7 @@ var auth = {
 function genToken(user) {
 
     var expires = expiresSeg(60);
-    var token = jwt.encode({exp: expires},require('../config/secret')());
+    var token = jwt.encode({exp: expires},require('./secret')());
 
     return {
         token: token,
