@@ -1,18 +1,19 @@
 (function () {
     'use strict';
 
-    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','cgBusy','app.outrosService'])
+    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','cgBusy','app.outrosService'])
         .controller('outrosController', outrosController);
 
-        outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','outrosService'];
+        outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','outrosService'];
 
-        function outrosController($rootScope,$scope,$log,$http,$uibModal,$window,outrosService) {
+        function outrosController($rootScope,$scope,$log,$http,$uibModal,$window,$mdDialog,outrosService) {
 
             var vm      = this;
             vm.buscar   = buscar;
             vm.sort_by  = sort_by;
             vm.showDown = showDown;
             vm.showUp   = showUp;
+            vm.showAlert= showAlert;
 
             vm.modalEntidade    = modalEntidade;
             vm.toggleSelection  = toggleSelection;
@@ -30,6 +31,28 @@
             vm.sortReverse  = true;
 
             buscar();
+
+            function showAlert(ev) {
+
+                $http.get('/api/validate').then(function(response) {
+                    var data = response.data;
+
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title('Abrale')
+                        .textContent(JSON.stringify(data))
+                        .ariaLabel('Alert Dialog Demo')
+                        .ok('Got it!')
+                        .targetEvent(ev)
+                    );
+
+
+                });
+
+
+            };
 
             function getJson() {
                 return outrosService.getOutros().then(function(data) {

@@ -15,6 +15,11 @@
                 <button ng-click="OC.modalIntencao('lg')" class="btn btn-primary direita" ng-disabled="OC.disableBtnTreinarIntencao"ng-hide="OC.mostrarbtnInt">Treinar Intenção</button>
             </div>
         </div>
+
+        <div class="col-lg-3">
+            <md-button class="md-primary md-raised" ng-click="OC.showAlert($event)">Valida</md-button>
+        </div>
+
     </div>
 </div>
 <div class="box-body" cg-busy="{promise:myPromise,message:'Carregando',backdrop:true,templateUrl:'core/navigation/loading.html',delay:300,minDuration:1000}">

@@ -30,7 +30,11 @@ var auth = {
             }
 
             if (dbUserObj) {
-                res.json(genToken(dbUserObj));
+
+                var tkn = genToken(dbUserObj);
+                res.json(tkn);
+                //console.log('token:' + JSON.stringify(tkn));
+
             }
 
         });

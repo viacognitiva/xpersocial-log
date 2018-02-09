@@ -3,18 +3,14 @@
 
     angular.module('app.login',[]).controller('loginController', loginController);
 
-    loginController.$inject = ['$scope','$http','$log','$location'];
+    loginController.$inject = ['$scope','$http','$log','$location','$localStorage'];
 
-    function loginController($scope, $http, $log, $location) {
+    function loginController($scope, $http, $log, $location, $localStorage) {
 
         var vm = this;
         vm.logar = logar;
 
-        console.log('login Controller');
-
         function logar(){
-
-            console.log('function Logar');
 
             var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
             var data = {
@@ -26,17 +22,17 @@
                 function(response){
                     if(response.status==200){
                         if(response.data.user.name!=''){
-                            console.log(response);
+                            console.log('loginController - token:' + JSON.stringify(response.data));
+                            localStorage.setitem('token', response.data);
                             $location.path('/chat');
                         }
                     }
                 },
                 function(erro){
-                    console.log('Erro '+ JSON.stringify(erro));
-                    $scope.errorMessage = "Error : " + erro.data.message;
+                    //console.log('Erro '+ JSON.stringify(erro));
+                    $scope.errorMessage = "Erro: " + erro.data.message;
                 }
             );
-
 
         }
 

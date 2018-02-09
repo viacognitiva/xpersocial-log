@@ -5,11 +5,11 @@ var validateRequest = {
     valida : function(req, res ) {
 
         var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] ;
-        console.log("Usuario na sessão " + req.session.usuario);
 
         if(req.session.usuario){
 
-            res.render(req.body.url)
+            console.log("Usuario na sessão " + JSON.stringify(req.session.usuario));
+            //res.render(req.body.url)
             return;
 
         } else if (token) {

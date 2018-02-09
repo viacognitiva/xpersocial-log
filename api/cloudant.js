@@ -198,7 +198,7 @@ var cloudant = {
 
         db.find(query, function(err, data) {
             if (err) {
-                return console.log('error ao buscar usuario login] ', err.message);
+                return console.log('error ao buscar usuario', err.message);
             }
             callback(data);
         });

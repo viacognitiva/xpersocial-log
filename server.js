@@ -3,10 +3,16 @@ var schedule = require('node-schedule');
 var auth = require('./api/auth.js');
 var cloudant = require('./api/cloudant.js');
 var logconversation = require('./api/logconversation.js');
+var validateRequest = require('./api/validateRequest.js');
 
 var job = schedule.scheduleJob('00 01 00 * * ', function(){
     console.log('Rodando Job Carga Log Treinamento..');
     cloudant.insertLogTreinamento(function() {});
+});
+
+
+app.get('/api/validate', function(req, res) {
+    validateRequest.valida(req, res);
 });
 
 app.post('/login', auth.login);
