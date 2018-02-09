@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('app.login',[]).controller('loginController', loginController);
+    angular.module('app.login',['ngStorage']).controller('loginController', loginController);
 
-    loginController.$inject = ['$scope','$http','$log','$location','$localStorage'];
+    loginController.$inject = ['$scope','$http','$location','$localStorage'];
 
-    function loginController($scope, $http, $log, $location, $localStorage) {
+    function loginController($scope, $http, $location, $localStorage) {
 
         var vm = this;
         vm.logar = logar;
@@ -22,19 +22,15 @@
                 function(response){
                     if(response.status==200){
                         if(response.data.user.name!=''){
-                            console.log('loginController - token:' + JSON.stringify(response.data));
-                            localStorage.setitem('token', response.data);
+                            $localStorage.token = response.data.token;
                             $location.path('/chat');
                         }
                     }
                 },
                 function(erro){
-                    //console.log('Erro '+ JSON.stringify(erro));
                     $scope.errorMessage = "Erro: " + erro.data.message;
                 }
             );
-
         }
-
     }
 })();

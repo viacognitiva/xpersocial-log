@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','cgBusy','app.outrosService'])
+    angular.module('app.outros', ['ngAnimate','ngSanitize','ui.bootstrap','ngMaterial','ngStorage','cgBusy','app.outrosService'])
         .controller('outrosController', outrosController);
 
-        outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','outrosService'];
+        outrosController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$mdDialog','$localStorage','outrosService'];
 
-        function outrosController($rootScope,$scope,$log,$http,$uibModal,$window,$mdDialog,outrosService) {
+        function outrosController($rootScope,$scope,$log,$http,$uibModal,$window,$mdDialog,$localStorage, outrosService) {
 
             var vm      = this;
             vm.buscar   = buscar;
@@ -34,8 +34,13 @@
 
             function showAlert(ev) {
 
-                $http.get('/api/validate').then(function(response) {
+                console.log('token:' + $localStorage.token);
+                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                var data = {token: $localStorage.token};
+
+                $http.post('/api/validate',JSON.stringify(data),config).then(function(response) {
                     var data = response.data;
+                    console.log('retorno: ' + JSON.stringify(data));
 
                     $mdDialog.show(
                         $mdDialog.alert()

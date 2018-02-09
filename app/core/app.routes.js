@@ -1,10 +1,13 @@
 (function () {
     'use strict';
-    angular.module('app').config(config);
+    angular.module('app')
+        .config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function config($stateProvider, $urlRouterProvider) {
+
+        console.log('config - start');
 
         $urlRouterProvider.when('/chat', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
@@ -17,7 +20,7 @@
                 controller: 'loginController',
                 controllerAs: 'LC',
                 restrictions: {
-                    ensureAuthenticated: true,
+                    ensureAuthenticated: false,
                     loginRedirect: false
                 }
             })
@@ -131,24 +134,35 @@
                         }
                     }
                 }
+            })
+
+        };
+
+        angular.module('app').run(run);
+        run.$inject = ['$rootScope'];
+
+        function run($rootScope){
+
+            console.log('run - start');
+
+            $rootScope.$on('$stateChangeStart', (event, next, current) => {
+
+                console.log('$rootScope.$on = $stateChangeStart');
+
+                if (next.restrictions.ensureAuthenticated) {
+
+                    console.log('ensureAuthenticated');
+                    if (!localStorage.getItem('token')) {
+                        $location.path('/login');
+                    }
+                }
+                if (next.restrictions.loginRedirect) {
+                    if (localStorage.getItem('token')) {
+                        $location.path('/chat');
+                    }
+                }
             });
 
-    }
-
-    function routeStart($rootScope, $location, $route) {
-
-        $rootScope.$on('$routeChangeStart', (event, next, current) => {
-            if (next.restrictions.ensureAuthenticated) {
-                if (!localStorage.getItem('token')) {
-                    $location.path('/login');
-                }
-            }
-            if (next.restrictions.loginRedirect) {
-                if (localStorage.getItem('token')) {
-                    $location.path('/chat');
-                }
-            }
-        });
-    }
+        };
 
 })();

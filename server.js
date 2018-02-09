@@ -10,12 +10,8 @@ var job = schedule.scheduleJob('00 01 00 * * ', function(){
     cloudant.insertLogTreinamento(function() {});
 });
 
-
-app.get('/api/validate', function(req, res) {
-    validateRequest.valida(req, res);
-});
-
 app.post('/login', auth.login);
+app.post('/api/validate', validateRequest.valida);
 
 app.get('/api/logconversation/treinamento', function(req, res) {
     cloudant.getLogTreinamento(req, res);
@@ -55,7 +51,6 @@ app.post('/api/logconversation/intencao', function(req, res) {
 app.post('/api/logconversation/treinamento/status',function (req, res) {
     cloudant.atualizaStatusTreinamento(req, res);
 });
-
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));

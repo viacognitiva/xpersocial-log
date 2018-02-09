@@ -4,15 +4,9 @@ var validateRequest = {
 
     valida : function(req, res ) {
 
-        var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] ;
+        var token = (req.body && req.body.token) || (req.query && req.query.access_token) || req.headers['x-access-token'] ;
 
-        if(req.session.usuario){
-
-            console.log("Usuario na sessão " + JSON.stringify(req.session.usuario));
-            //res.render(req.body.url)
-            return;
-
-        } else if (token) {
+        if(token){
 
             try {
 
@@ -21,15 +15,21 @@ var validateRequest = {
 
                 if (decoded.exp <= Date.now()) {
 
-                    res.statusCode=400;
+                    res.statusCode=401;
                     res.setHeader('Content-Type', 'application/json');
                     res.json({
-                        "status": 400,
+                        "status": 401,
                         "message": "Token Expired"
+                    });
+                } else {
+                    res.statusCode=200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json({
+                        "status": 200,
+                        "message": "validate"
                     });
                 }
 
-                res.render(req.body.url)
                 return;
 
             } catch (err) {
@@ -42,6 +42,12 @@ var validateRequest = {
 
                 console.log(err);
             }
+
+        } else if (req.session.usuario) {
+
+            console.log("Usuario na sessão " + JSON.stringify(req.session.usuario));
+            //res.render(req.body.url)
+            return;
 
         } else {
 
