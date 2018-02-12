@@ -7,8 +7,6 @@
 
     function config($stateProvider, $urlRouterProvider) {
 
-        console.log('config - start');
-
         $urlRouterProvider.when('/chat', '/chat/list');
         $urlRouterProvider.when('/user', '/user/list');
         $urlRouterProvider.when('/outros', '/outros/list');
@@ -20,8 +18,7 @@
                 controller: 'loginController',
                 controllerAs: 'LC',
                 restrictions: {
-                    ensureAuthenticated: false,
-                    loginRedirect: false
+                    ensureAuthenticated: false
                 }
             })
             .state('root', {
@@ -67,6 +64,9 @@
             })
             .state('root.chat.list', {
                 url: '/list',
+                restrictions: {
+                    ensureAuthenticated: true
+                },
                 data: {
                     title: 'Conversas',
                     breadcrumb: 'Conversas'
@@ -75,11 +75,7 @@
                     'content@': {
                         templateUrl: 'core/chat/chat.html',
                         controller: 'chatController',
-                        controllerAs: 'CC',
-                        restrictions: {
-                            ensureAuthenticated: true,
-                            loginRedirect: false
-                        }
+                        controllerAs: 'CC'
                     }
                 }
             })
@@ -93,6 +89,9 @@
             })
             .state('root.user.list', {
                 url: '/list',
+                restrictions: {
+                    ensureAuthenticated: true
+                },
                 data: {
                     title: 'Usuários',
                     breadcrumb: 'Usuários'
@@ -101,11 +100,7 @@
                     'content@': {
                         templateUrl: 'core/user/user.html',
                         controller: 'userController',
-                        controllerAs: 'UC',
-                        restrictions: {
-                            ensureAuthenticated: true,
-                            loginRedirect: false
-                        }
+                        controllerAs: 'UC'
                     }
                 }
             })
@@ -119,6 +114,9 @@
             })
             .state('root.outros.list', {
                 url: '/list',
+                restrictions: {
+                    ensureAuthenticated: true
+                },
                 data: {
                     title: 'Outros',
                     breadcrumb: 'Outros'
@@ -127,11 +125,7 @@
                     'content@': {
                         templateUrl: 'core/outros/outros.html',
                         controller: 'outrosController',
-                        controllerAs: 'OC',
-                        restrictions: {
-                            ensureAuthenticated: true,
-                            loginRedirect: false
-                        }
+                        controllerAs: 'OC'
                     }
                 }
             })
@@ -139,30 +133,44 @@
         };
 
         angular.module('app').run(run);
-        run.$inject = ['$rootScope'];
+        run.$inject = ['$rootScope','$location','$http'];
 
-        function run($rootScope){
+        function run($rootScope, $location, $http){
 
-            console.log('run - start');
+            function message(to, toP, from, fromP) { return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP); }
 
-            $rootScope.$on('$stateChangeStart', (event, next, current) => {
+            $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) {
 
-                console.log('$rootScope.$on = $stateChangeStart');
+                if(to.restrictions.ensureAuthenticated) {
 
-                if (next.restrictions.ensureAuthenticated) {
+                    console.log("Start: " + message(to, toP, from, fromP));
 
-                    console.log('ensureAuthenticated');
                     if (!localStorage.getItem('token')) {
                         $location.path('/login');
-                    }
-                }
-                if (next.restrictions.loginRedirect) {
-                    if (localStorage.getItem('token')) {
-                        $location.path('/chat');
-                    }
-                }
-            });
+                    }else{
 
+                        var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                        var data = {token: localStorage.getItem('token')};
+
+                        $http.post('/api/validate',JSON.stringify(data),config).then(
+                            function(response) {
+                                $location.path(to.name);
+                            },
+                            function(error){
+                                console.log('Erro:' + JSON.stringify(error.data.message));
+                                $location.path('/login');
+                            }
+                        );
+                    }
+
+                }
+
+            });
+            /*
+            $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) { console.log("Start:   " + message(to, toP, from, fromP)); });
+            $rootScope.$on("$stateChangeSuccess", function(evt, to, toP, from, fromP) { console.log("Success: " + message(to, toP, from, fromP)); });
+            $rootScope.$on("$stateChangeError", function(evt, to, toP, from, fromP, err) { console.log("Error:   " + message(to, toP, from, fromP), err); });
+            */
         };
 
 })();

@@ -12,6 +12,7 @@
         'app.filtersT',
         'app.nav.menu',
         'app.modal',
-        'app.directives.divSize'
+        'app.directives.divSize',
+        'app.authProvider'
     ]);
 })();
