@@ -11,7 +11,7 @@ var validateRequest = {
             try {
 
                 var decoded = jwt.decode(token, require('./secret.js')());
-                console.log("decoded.exp" + decoded.exp + ", Date.now() " + Date.now());
+                //console.log("decoded.exp" + decoded.exp + ", Date.now() " + Date.now());
 
                 if (decoded.exp <= Date.now()) {
 
