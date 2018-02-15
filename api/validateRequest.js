@@ -45,8 +45,13 @@ var validateRequest = {
 
         } else if (req.session.usuario) {
 
-            console.log("Usuario na sessão " + JSON.stringify(req.session.usuario));
-            //res.render(req.body.url)
+            res.statusCode=401;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+                "status": 401,
+                "message": "Token Expired"
+            });
+
             return;
 
         } else {
