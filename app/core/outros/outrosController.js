@@ -34,7 +34,6 @@
 
             function showAlert(ev) {
 
-                console.log('token:' + $localStorage.token);
                 var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
                 var data = {token: $localStorage.token};
 
@@ -47,15 +46,13 @@
                         .parent(angular.element(document.querySelector('#popupContainer')))
                         .clickOutsideToClose(true)
                         .title('Abrale')
-                        .textContent(JSON.stringify(data))
+                        .textContent($localStorage.token)
                         .ariaLabel('Alert Dialog Demo')
                         .ok('Got it!')
                         .targetEvent(ev)
                     );
 
-
                 });
-
 
             };
 

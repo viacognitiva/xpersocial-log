@@ -2,12 +2,21 @@
     'use strict';
 
     angular.module('app.nav.header', [])
+        .controller('headerController', headerController);
 
-            .controller('HeaderController', HeaderController);
+    headerController.$inject = ['$location','$localStorage'];
 
-    HeaderController.$inject = [];
+    function headerController($location,$localStorage) {
 
-    function HeaderController() {
+        var vm = this;
+        vm.logout = logout;
+
+        function logout(){
+
+            $localStorage.token = '';
+            $location.path('/login');
+
+        }
 
     }
 })();

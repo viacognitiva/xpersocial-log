@@ -1,4 +1,4 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');
 
 var validateRequest = {
 
@@ -8,6 +8,28 @@ var validateRequest = {
 
         if(token){
 
+            try {
+                var decoded = jwt.verify(token, require('./secret.js')());
+
+                res.statusCode=200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({
+                    "status": 200,
+                    "message": "validate"
+                });
+
+            } catch(err) {
+
+                res.statusCode=401;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({
+                  "status": 401,
+                  "message": "Token Expired"
+                });
+
+            }
+
+            /*
             try {
 
                 var decoded = jwt.decode(token, require('./secret.js')());
@@ -42,14 +64,15 @@ var validateRequest = {
 
                 console.log(err);
             }
+            */
 
         } else if (req.session.usuario) {
 
-            res.statusCode=401;
+            res.statusCode=200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
-                "status": 401,
-                "message": "Token Expired"
+                "status": 200,
+                "message": "validate"
             });
 
             return;

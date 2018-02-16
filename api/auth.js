@@ -1,4 +1,4 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');
 var cloudant = require('./cloudant.js');
 
 var auth = {
@@ -64,6 +64,20 @@ var auth = {
 /*private methods*/
 function genToken(user) {
 
+    var token = jwt.sign(
+        {
+            exp: Math.floor(Date.now() / 1000) + (60 * 60),
+            data: user
+        },
+        require('./secret')()
+    );
+
+    return{
+        token: token,
+        user: user
+    }
+
+    /*
     var expires = expiresSeg(60);
     var token = jwt.encode({exp: expires},require('./secret')());
 
@@ -72,6 +86,7 @@ function genToken(user) {
         expires: expires,
         user: user
     };
+    */
 }
 
 function expiresIn(numDays) {

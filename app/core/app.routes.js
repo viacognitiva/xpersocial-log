@@ -31,8 +31,8 @@
                 views: {
                     'header': {
                         templateUrl: 'core/navigation/headerView.html',
-                        controller: '',
-                        controllerAs: ''
+                        controller: 'headerController',
+                        controllerAs: 'HC'
                     },
                     'menu': {
                         templateUrl: 'core/navigation/menuView.html',
@@ -133,24 +133,27 @@
         };
 
         angular.module('app').run(run);
-        run.$inject = ['$rootScope','$location','$http'];
+        run.$inject = ['$rootScope','$location','$http','$localStorage'];
 
-        function run($rootScope, $location, $http){
-
-            function message(to, toP, from, fromP) { return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP); }
+        function run($rootScope, $location, $http, $localStorage){
 
             $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) {
 
+                //console.log("$stateChangeStart: " + message(to, toP, from, fromP));
+                //console.log(to.name + ': ' + to.restrictions.ensureAuthenticated);
+                //console.log('Token:' + $localStorage.token);
+
                 if(to.restrictions.ensureAuthenticated) {
 
-                    console.log("Start: " + message(to, toP, from, fromP));
+                    //console.log('Nessecita autenticação');
 
-                    if (!localStorage.getItem('token')) {
+                    if (!$localStorage.token) {
+                        //console.log('token não localizado');
                         $location.path('/login');
                     }else{
-
+                        //console.log('token localizado');
                         var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
-                        var data = {token: localStorage.getItem('token')};
+                        var data = {token: $localStorage.token};
 
                         $http.post('/api/validate',JSON.stringify(data),config).then(
                             function(response) {
@@ -163,14 +166,19 @@
                         );
                     }
 
+                } else {
+                    //console.log('Não nessecita autenticação');
+                    $location.path(to.name);
                 }
 
             });
-            /*
-            $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) { console.log("Start:   " + message(to, toP, from, fromP)); });
-            $rootScope.$on("$stateChangeSuccess", function(evt, to, toP, from, fromP) { console.log("Success: " + message(to, toP, from, fromP)); });
-            $rootScope.$on("$stateChangeError", function(evt, to, toP, from, fromP, err) { console.log("Error:   " + message(to, toP, from, fromP), err); });
-            */
+
+            //$rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) { console.log("Start:   " + message(to, toP, from, fromP)); });
+            //$rootScope.$on("$stateChangeSuccess", function(evt, to, toP, from, fromP) { console.log("Success: " + message(to, toP, from, fromP)); });
+            //$rootScope.$on("$stateChangeError", function(evt, to, toP, from, fromP, err) { console.log("Error:   " + message(to, toP, from, fromP), err); });
+
         };
+
+        function message(to, toP, from, fromP) { return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP); };
 
 })();
