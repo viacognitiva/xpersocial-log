@@ -61,7 +61,6 @@ var auth = {
     },
 }
 
-/*private methods*/
 function genToken(user) {
 
     var token = jwt.sign(
@@ -77,26 +76,6 @@ function genToken(user) {
         user: user
     }
 
-    /*
-    var expires = expiresSeg(60);
-    var token = jwt.encode({exp: expires},require('./secret')());
-
-    return {
-        token: token,
-        expires: expires,
-        user: user
-    };
-    */
-}
-
-function expiresIn(numDays) {
-    var dateObj = new Date();
-    return dateObj.setDate(dateObj.getDate() + numDays);
-}
-
-function expiresSeg(segundos) {
-    var dateObj = new Date();
-    return dateObj.setSeconds(segundos);
 }
 
 module.exports = auth;

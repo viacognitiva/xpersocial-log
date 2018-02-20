@@ -69,7 +69,8 @@
                 },
                 data: {
                     title: 'Conversas',
-                    breadcrumb: 'Conversas'
+                    breadcrumb: 'Conversas',
+                    caminho: '/chat/list'
                 },
                 views: {
                     'content@': {
@@ -94,7 +95,8 @@
                 },
                 data: {
                     title: 'Usuários',
-                    breadcrumb: 'Usuários'
+                    breadcrumb: 'Usuários',
+                    caminho: '/user/list'
                 },
                 views: {
                     'content@': {
@@ -119,7 +121,8 @@
                 },
                 data: {
                     title: 'Outros',
-                    breadcrumb: 'Outros'
+                    breadcrumb: 'Outros',
+                    caminho: '/outros/list'
                 },
                 views: {
                     'content@': {
@@ -140,24 +143,18 @@
             $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) {
 
                 //console.log("$stateChangeStart: " + message(to, toP, from, fromP));
-                //console.log(to.name + ': ' + to.restrictions.ensureAuthenticated);
-                //console.log('Token:' + $localStorage.token);
-
                 if(to.restrictions.ensureAuthenticated) {
 
-                    //console.log('Nessecita autenticação');
-
                     if (!$localStorage.token) {
-                        //console.log('token não localizado');
                         $location.path('/login');
                     }else{
-                        //console.log('token localizado');
                         var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
                         var data = {token: $localStorage.token};
 
                         $http.post('/api/validate',JSON.stringify(data),config).then(
                             function(response) {
-                                $location.path(to.name);
+                                //$location.path(to.name);
+                                $location.path(to.data.caminho);
                             },
                             function(error){
                                 console.log('Erro:' + JSON.stringify(error.data.message));
@@ -167,7 +164,6 @@
                     }
 
                 } else {
-                    //console.log('Não nessecita autenticação');
                     $location.path(to.name);
                 }
 
