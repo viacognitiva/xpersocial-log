@@ -49,8 +49,8 @@
                     },
                     'footer': {
                         templateUrl: 'core/navigation/footerView.html',
-                        controller: '',
-                        controllerAs: ''
+                        controller: 'footerController',
+                        controllerAs: 'FC'
                     }
                 }
             })
@@ -153,8 +153,8 @@
 
                         $http.post('/api/validate',JSON.stringify(data),config).then(
                             function(response) {
-                                //$location.path(to.name);
-                                $location.path(to.data.caminho);
+                                $location.path(to.name);
+                                //$location.path(to.data.caminho);
                             },
                             function(error){
                                 console.log('Erro:' + JSON.stringify(error.data.message));

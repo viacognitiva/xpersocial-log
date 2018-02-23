@@ -8,9 +8,16 @@
 
     function chatService($http, $filter, $log, $q) {
 
+        var qtdChat = 0;
+
         return {
-            getChat: getChat
+            getChat: getChat,
+            getNChat: getNChat
         };
+
+        function getNChat(){
+            return qtdChat;
+        }
 
         function getChat() {
 
@@ -24,6 +31,7 @@
 
                 var data = response.data;
                 var pos = 0;
+                qtdChat = 0;
 
                 angular.forEach(data.docs, function(item){
 
@@ -52,7 +60,12 @@
                     if(!angular.equals(jsonParam, {})){
                         retorno.push(jsonParam);
                     }
+
+                    qtdChat = qtdChat + 1;
+
                 });
+
+                console.log('qtd:'+ qtdChat);
 
                 if(retorno.length!=0){
                     retorno.push({selected: {}});

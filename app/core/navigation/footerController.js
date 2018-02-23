@@ -1,13 +1,15 @@
 (function () {
     'use strict';
 
-    angular.module('app.nav.footer', [])
+    angular.module('app.nav.footer', ['app.chatService'])
+        .controller('footerController', footerController);
 
-            .controller('FooterController', FooterController);
+    footerController.$inject = ['chatService'];
 
-    FooterController.$inject = [];
+    function footerController(chatService) {
 
-    function FooterController() {
+        var vm = this;
+        vm.ttl = chatService.getNChat();
 
     }
 })();

@@ -5,7 +5,7 @@ var cloudant = require('./api/cloudant.js');
 var logconversation = require('./api/logconversation.js');
 var validateRequest = require('./api/validateRequest.js');
 
-var job = schedule.scheduleJob('00 01 00 * * ', function(){
+var job = schedule.scheduleJob('*/30 * * * *', function(){
     console.log('Rodando Job Carga Log Treinamento..');
     cloudant.insertLogTreinamento(function() {});
 });
@@ -15,6 +15,10 @@ app.post('/api/validate', validateRequest.valida);
 
 app.get('/api/logconversation/treinamento', function(req, res) {
     cloudant.getLogTreinamento(req, res);
+});
+
+app.get('/api/logconversation', function (req, res) {
+    logconversation.get(req, res);
 });
 
 app.get('/api/logconversation/usuarios', function(req, res) {
