@@ -34,11 +34,14 @@
             vm.sortType     = 'name';
             vm.sortReverse  = true;
 
+            $rootScope.total = 0;
+
             buscar();
 
             function getJson() {
                 return chatService.getChat().then(function(data) {
                     vm.items = data;
+                    $rootScope.total = chatService.retornaQdt()
                 });
             }
 

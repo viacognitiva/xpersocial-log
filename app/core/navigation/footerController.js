@@ -1,16 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.nav.footer', ['app.footerService'])
+    angular.module('app.nav.footer', [])
         .controller('footerController', footerController);
 
-    footerController.$inject = ['chatService','footerService'];
+    footerController.$inject = [];
 
-    function footerController(chatService, footerService) {
-
-        var vm = this;
-        console.log('footerController - 2');
-        console.log('footerController: ' + footerService.getTotal());
+    function footerController() {
 
     }
 })();

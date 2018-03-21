@@ -1,17 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('app.chatService', ['app.footerService'])
+    angular.module('app.chatService', [])
         .factory('chatService', chatService);
 
-    chatService.$inject = ['$http','$filter','$log','$q','footerService'];
+    chatService.$inject = ['$http','$filter','$log','$q'];
 
-    function chatService($http, $filter, $log, $q, footerService) {
+    function chatService($http, $filter, $log, $q) {
 
         var qtdChat = 0;
 
         return {
-            getChat: getChat
+            getChat: getChat,
+            retornaQdt: retornaQdt
         };
 
         function getChat() {
@@ -60,9 +61,6 @@
 
                 });
 
-                console.log('chatService: 1');
-                footerService.setTotal(qtdChat);
-
                 if(retorno.length!=0){
                     retorno.push({selected: {}});
                 }
@@ -78,6 +76,10 @@
                 return $q.reject(error);
             }
 
+        }
+
+        function retornaQdt(){
+            return qtdChat;
         }
 
     }
