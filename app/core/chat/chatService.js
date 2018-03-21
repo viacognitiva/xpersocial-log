@@ -1,23 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('app.chatService', [])
+    angular.module('app.chatService', ['app.footerService'])
         .factory('chatService', chatService);
 
-    chatService.$inject = ['$http','$filter','$log','$q'];
+    chatService.$inject = ['$http','$filter','$log','$q','footerService'];
 
-    function chatService($http, $filter, $log, $q) {
+    function chatService($http, $filter, $log, $q, footerService) {
 
         var qtdChat = 0;
 
         return {
-            getChat: getChat,
-            getNChat: getNChat
+            getChat: getChat
         };
-
-        function getNChat(){
-            return qtdChat;
-        }
 
         function getChat() {
 
@@ -65,7 +60,8 @@
 
                 });
 
-                console.log('qtd:'+ qtdChat);
+                console.log('chatService: 1');
+                footerService.setTotal(qtdChat);
 
                 if(retorno.length!=0){
                     retorno.push({selected: {}});
@@ -78,6 +74,7 @@
             function errorChat(error){
                 var newMessage = 'XHR Failed for getChat.';
                 $log.error(newMessage);
+                $log.error(error);
                 return $q.reject(error);
             }
 
