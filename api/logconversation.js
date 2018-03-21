@@ -1,5 +1,6 @@
 require('dotenv-safe').load();
 
+var watson = require('watson-developer-cloud');
 var request=require('request');
 var express = require('express');
 var app = express();
@@ -11,141 +12,139 @@ var apiHostname = process.env.APIHOSTNAME;
 var workspacesId = process.env.WORKSPACE_ID;
 var protocol = process.env.NODE_ENV == 'production' ? "https" : "http" ;
 
+var conversation = new watson.ConversationV1({
+    username: wts_username,
+    password: wts_password,
+    version_date: '2018-02-16'
+});
+
 var logConversation = {
 
     get : function(req,res) {
 
-        const baseQuery = '/conversation/api/v1/workspaces/'+ workspacesId + '/logs';
-        const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
+        var params = {
+            workspace_id: workspacesId,
+        };
 
-        request.get(fullUrl,function(err,resp,body){
-
-            if(err){
-                console.log(" logConversation.get Error: "+JSON.parse(body));
+        conversation.listLogs(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.get Error: " + err);
+            } else {
+                res.status(200).json(response);
             }
-
-            res.status(200).json(JSON.parse(body));
-
         });
+
     },
 
     getEntidades : function(req,res) {
 
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities';
-        const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
+        var params = {
+            workspace_id: workspacesId,
+        };
 
-        request.get(fullUrl,function(err,resp,body){
-
-            if(err){
-                console.log(" logConversation.getEntidades Error: "+JSON.parse(body));
+        conversation.listEntities(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.getEntidades Error: " + err);
+            } else {
+                res.status(200).json(response);
             }
-            res.status(200).json(JSON.parse(body));
 
+        });
+    },
+
+    getEntidadeValue : function(req,res) {
+
+        var params = {
+            workspace_id: workspacesId,
+            entity: req.params.entity
+        };
+
+        conversation.listValues(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.getEntidadeValue Error: " + err);
+            } else {
+                res.status(200).json(response);
+            }
+        });
+    },
+
+    criarSinonimo : function(req,res) {
+
+        var params = {
+            workspace_id: workspacesId,
+            entity: req.body.entidade,
+            value: req.body.valor,
+            synonym: req.body.sinonimo
+        };
+
+        conversation.createSynonym(params, function(err, response) {
+            if (err) {
+                console.error(err);
+                console.log(" logConversation.criarSinônimo Error: " + err);
+            } else {
+                res.status(200).json(response);
+            }
         });
     },
 
     getIntencoes : function(req,res) {
 
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/intents';
-        const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
+        var params = {
+            workspace_id: workspacesId,
+        };
 
-        request.get(fullUrl,function(err,resp,body){
-
-            if(err){
-                console.log(" logConversation.getIntencoes Error: "+JSON.parse(body));
+        conversation.listIntents(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.getIntencoes Error: "+JSON.parse(err));
+            } else {
+                res.status(200).json(response);
             }
-
-            res.status(200).json(JSON.parse(body));
 
         });
     },
 
     treinaIntencao : function(req,res) {
 
-        const intent =  req.body.intencao;
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/intents/' + intent + '/examples';
-        const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
+        var params = {
+            workspace_id: workspacesId,
+            intent: req.body.intencao,
+            examples: [
+                {
+                    text: req.body.message
+                }
+            ]
+        };
 
-        request.post({
-            headers: { "Content-Type": "application/json"},
-            url: fullUrl,
-            body:  { "text":req.body.message},
-            json:true
-        }, function(err,resp,body){
-            if(err){
-                console.log(" logConversation.treinaIntencao Error: "+body);
+        conversation.createIntent(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.treinaIntencao Error: " + err);
+            } else {
+                res.status(200).json(response);
             }
-            res.status(200).json(body);
         });
     },
 
     treinaEntidade : function(req,res) {
 
-        const entity =  req.body.entidade;
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values';
-        const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
-
-        request.post(
-            {
-                headers: {"Content-Type":"application/json"},
-                url: fullUrl,
-                body: {"value": req.body.valor,"metadata": {},},
-                json:true
-            },
-            function(err,resp,body){
-                if(err){
-                    console.log(" logConversation.treinaIntencao Error: "+body);
+        var params = {
+            workspace_id: workspacesId,
+            entity: req.body.entidade,
+            values: [
+                {
+                    value: req.body.valor
                 }
-                res.status(200).json(body);
+            ]
+        };
+
+        conversation.createEntity(params, function(err, response) {
+            if (err) {
+                console.log(" logConversation.treinaIntencao Error: "+ err);
+            } else {
+                res.status(200).json(response);
             }
-        );
-    },
-
-    getEntidadeValue : function(req,res) {
-
-        const entity=req.params.entity;
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values';
-        const version = 'version=2017-05-26&export=false&include_count=false';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
-
-        request.get(fullUrl,function(err,resp,body){
-            if(err){
-                console.log(" logConversation.getEntidadeValue Error: "+JSON.parse(body));
-            }
-            res.status(200).json(JSON.parse(body));
         });
-    },
-
-    criarSinonimo : function(req,res) {
-
-        const entity =  req.body.entidade;
-        const value =  req.body.valor;
-
-        const baseQuery = '/conversation/api/v1/workspaces/' + workspacesId + '/entities/' + entity + '/values/' + value + '/synonyms';
-        const version = 'version=2017-05-26';
-        const fullUrl = 'https://' + wts_username + ':' + wts_password + '@' + apiHostname + baseQuery + '?' + version;
-
-        request.post(
-            {
-                headers: { "Content-Type": "application/json"},
-                url: fullUrl,
-                body: {"synonym": req.body.sinonimo},
-                json:true
-            },
-
-            function(err,resp,body){
-                if(err){
-                    console.log(" logConversation.criarSinonimoo Error: " + body);
-                }
-                res.status(200).json(body);
-            }
-        );
     }
+
 }
 
 module.exports = logConversation;
