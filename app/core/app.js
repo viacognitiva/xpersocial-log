@@ -14,7 +14,6 @@
         'app.nav.menu',
         'app.nav.footer',
         'app.modal',
-        'app.directives.divSize',
-        'app.authProvider'
+        'app.directives.divSize'
     ]);
 })();

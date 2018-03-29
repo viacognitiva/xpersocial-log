@@ -4,9 +4,9 @@
     angular.module('app.modal', ['ngAnimate','ngSanitize','ui.bootstrap'])
         .controller('modalController', modalController);
 
-        modalController.$inject = ['$scope','$uibModalInstance','$http','valPar','valSel','valItem'];
+        modalController.$inject = ['$scope','$uibModalInstance','$http','valBanco','valPar','valSel','valItem'];
 
-        function modalController($scope,$uibModalInstance,$http,valPar,valSel,valItem) {
+        function modalController($scope,$uibModalInstance,$http,valBanco,valPar,valSel,valItem) {
 
             var $ctrl = this;
             $ctrl.defineVlrSin = 'Valor';
@@ -34,7 +34,7 @@
 
                             var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
                             var data = {
-                                intencao: $scope.selectedIntencao ,
+                                intencao: $scope.selectedIntencao,
                                 message: item.msgUser
                             };
 
@@ -47,12 +47,13 @@
                                             $ctrl.errorMessage=""+response.data.error;
                                         } else {
                                             $ctrl.sucessoMessage="Intenção associada com sucesso.";
-                                            var data1 = { idLog:valSel };
+                                            var data1 = {
+                                                idLog:valSel,
+                                                banco:valBanco
+                                            };
                                             $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config)
                                             .then(function(response){
-                                                if(response.status==201){
-                                                    $scope.buscar();
-                                                }
+
                                                 },
                                                 function(error){
                                                     console.log('Error:' + JSON.stringify(error));
@@ -96,15 +97,14 @@
                                                 $ctrl.errorMessage=""+response.data.error;
 
                                             }else {
-                                                var data1 = { idLog:valSel };
+                                                var data1 = {
+                                                    idLog:valSel,
+                                                    banco:valBanco
+                                                };
                                                 $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
 
                                                     function(response){
                                                         $ctrl.sucessoMessage="Sinonimo criado com sucesso.";
-
-                                                        if(response.status==201){
-                                                            $scope.buscar();
-                                                        }
                                                     },
                                                     function(error){
                                                         $ctrl.errorMessage = "Erro";
@@ -138,13 +138,13 @@
 
                                             } else {
 
-                                                var data1 = { idLog:valSel };
+                                                var data1 = {
+                                                    idLog:valSel,
+                                                    banco:valBanco
+                                                };
                                                 $http.post('/api/logconversation/treinamento/status',JSON.stringify(data1),config).then(
                                                     function(response){
                                                         $ctrl.sucessoMessage="Valor da Entidade criado com sucesso.";
-                                                        if(response.status==201){
-                                                            $scope.buscar();
-                                                        }
                                                     },
                                                     function(error){
                                                         console.log('Erro ' + error);

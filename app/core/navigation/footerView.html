@@ -1,3 +1,21 @@
 <div class="box-body">
-    <i class="fa fa-bug fa-fw"></i>  {{total}}
+    <div ng-show="showInfo">
+        <div class="col-lg-4">
+            <div class="ibox-content">
+                <p><span class="label label-danger">Total de Conversas: {{totalChat}}</span></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="ibox-content">
+                <p><span class="label label-danger">Total de Interações: {{totalInter}}</span></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="ibox-content">
+                <p><span class="label label-danger">Média de Interações por Conversa: {{media}}</span></p>
+            </div>
+        </div>
+    </div>
 </div>

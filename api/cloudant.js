@@ -290,29 +290,53 @@ var cloudant = {
 
     atualizaStatusTreinamento : function (req, res){
 
-        db = cloudantDB.db.use(dbname);
-        const id =  req.body.idLog;
-        db.index( {log_id: 'log_id', type:'json', index:{fields:['log_id']}});
-        var query = { selector: { log_id: id }};
+        const id = req.body.idLog;
 
-        db.find(query, function(err, data) {
+        if(req.body.banco == 'chat'){
 
-            if (err) {
-                return console.log('[db.atualizaStatusTreinamento] ', err.message);
-            }
+            db = cloudantDB.use(process.env.CLOUDANT_DB);
+            db.index( {log_id: 'log_id', type:'json', index:{fields:['log_id']}});
+            var query = { selector: { log_id: id }};
 
-            data.docs[0].treinado=true;
+            db.find(query, function(err, data) {
 
-            db.insert(data.docs[0], function(err, data) {
+                if (err) {
+                    return console.log('[db.atualizaStatusTreinamento] ', err.message);
+                    res.status(201).json(err);
+                }else{
+                    console.log('Data: ' + JSON.stringify(data));
+                    data.docs[0].treinado=true;
 
-                if (err) return console.log(err.message);
-                console.log('update completed: ' + data);
-                res.status(201).json(data);
+                    db.insert(data.docs[0], function(err, data) {
+                        if (err) return console.log(err.message);
+                        res.status(201).json(data);
+                    });
+
+                }
+
             });
 
-        });
 
+        } else {
+
+            db = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
+
+            db.get(id, function(err, data){
+
+                if(err){
+                    res.status(201).json(err);
+                }else{
+                    data.treinado=true;
+                    db.insert(data, function(err, data) {
+                        if (err) return console.log(err.message);
+                        res.status(201).json(data);
+                    });
+                }
+            });
+
+        }
     }
+
 };
 
 module.exports = cloudant;

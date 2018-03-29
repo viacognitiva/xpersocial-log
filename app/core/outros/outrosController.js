@@ -29,32 +29,9 @@
 
             vm.sortType     = 'name';
             vm.sortReverse  = true;
+            $rootScope.showInfo = true;
 
             buscar();
-
-            function showAlert(ev) {
-
-                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
-                var data = {token: $localStorage.token};
-
-                $http.post('/api/validate',JSON.stringify(data),config).then(function(response) {
-                    var data = response.data;
-                    console.log('retorno: ' + JSON.stringify(data));
-
-                    $mdDialog.show(
-                        $mdDialog.alert()
-                        .parent(angular.element(document.querySelector('#popupContainer')))
-                        .clickOutsideToClose(true)
-                        .title('Abrale')
-                        .textContent($localStorage.token)
-                        .ariaLabel('Alert Dialog Demo')
-                        .ok('Got it!')
-                        .targetEvent(ev)
-                    );
-
-                });
-
-            };
 
             function getJson() {
                 return outrosService.getOutros().then(function(data) {
@@ -110,6 +87,9 @@
                     backdrop:false,
                     size: size,
                     resolve: {
+                        valBanco: function(){
+                            return 'outros';
+                        },
                         valPar: function(){
                             return 'entidade';
                         },
@@ -120,6 +100,8 @@
                             return vm.items;
                          }
                     }
+                }).closed.then(function(){
+                    buscar();
                 });
             };
 
@@ -135,6 +117,9 @@
                     backdrop:false,
                     size: size,
                     resolve: {
+                        valBanco: function(){
+                            return 'outros';
+                        },
                         valPar: function(){
                             return 'intencao';
                         },
@@ -145,7 +130,33 @@
                             return vm.items;
                         }
                     }
+                }).closed.then(function(){
+                    buscar();
                 });
+            };
+
+            function showAlert(ev) {
+
+                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                var data = {token: $localStorage.token};
+
+                $http.post('/api/validate',JSON.stringify(data),config).then(function(response) {
+                    var data = response.data;
+                    console.log('retorno: ' + JSON.stringify(data));
+
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title('Abrale')
+                        .textContent($localStorage.token)
+                        .ariaLabel('Alert Dialog Demo')
+                        .ok('Got it!')
+                        .targetEvent(ev)
+                    );
+
+                });
+
             };
 
         }

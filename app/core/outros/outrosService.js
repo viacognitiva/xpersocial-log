@@ -31,6 +31,7 @@
                     jsonParam.idchat = item.doc.idchat;
                     jsonParam.msgUser = item.doc.texto;
                     jsonParam.data = $filter('date')(new Date(item.doc.data), "dd/MM/yyyy HH:mm:ss");
+                    jsonParam.treinado = item.doc.treinado;
 
                     if(!angular.equals(jsonParam, {})){
                         retorno.push(jsonParam);

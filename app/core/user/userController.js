@@ -18,6 +18,7 @@
 
             vm.sortType     = 'nome';
             vm.sortReverse  = true;
+            $rootScope.showInfo = false;
 
             buscar();
 

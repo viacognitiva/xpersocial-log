@@ -59,6 +59,9 @@
                                 </a>
                             </div>
                         </th>
+                        <th>Treino<div style="text-align: center;"><a href="#">
+                            Treino</a></div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +72,7 @@
                         <td>{{item.idchat}}</td>
                         <td>{{item.msgUser}}</td>
                         <td>{{item.data}}</td>
+                        <td style="text-align: center;"><span ng-show="{{item.treinado}}" class="fa fa-check" aria-hidden="true"> </span></td>
                     </tr>
                 </tbody>
             </table>

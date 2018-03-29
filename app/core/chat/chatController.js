@@ -34,14 +34,20 @@
             vm.sortType     = 'name';
             vm.sortReverse  = true;
 
-            $rootScope.total = 0;
+            $rootScope.totalChat = 0;
+            $rootScope.totalInter = 0;
+            $rootScope.media = 0;
+            $rootScope.showInfo = true;
 
             buscar();
 
             function getJson() {
                 return chatService.getChat().then(function(data) {
                     vm.items = data;
-                    $rootScope.total = chatService.retornaQdt()
+                    $rootScope.totalInter = chatService.retornaQdt();
+                    $rootScope.totalChat = chatService.retornaQdtChat();
+                    $rootScope.media = ($rootScope.totalInter / $rootScope.totalChat).toFixed(0);
+
                 });
             }
 
@@ -93,6 +99,9 @@
                     backdrop:false,
                     size: size,
                     resolve: {
+                        valBanco: function(){
+                            return 'chat';
+                        },
                         valPar: function(){
                             return 'entidade';
                         },
@@ -103,6 +112,8 @@
                             return vm.items;
                          }
                     }
+                }).closed.then(function(){
+                    buscar();
                 });
             };
 
@@ -118,6 +129,9 @@
                     backdrop:false,
                     size: size,
                     resolve: {
+                        valBanco: function(){
+                            return 'chat';
+                        },
                         valPar: function(){
                             return 'intencao';
                         },
@@ -128,6 +142,8 @@
                             return vm.items;
                         }
                     }
+                }).closed.then(function(){
+                    buscar();
                 });
             };
 

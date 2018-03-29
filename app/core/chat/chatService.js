@@ -9,15 +9,18 @@
     function chatService($http, $filter, $log, $q) {
 
         var qtdChat = 0;
+        var qtdConv = 0;
 
         return {
             getChat: getChat,
-            retornaQdt: retornaQdt
+            retornaQdt: retornaQdt,
+            retornaQdtChat: retornaQdtChat
         };
 
         function getChat() {
 
             var retorno = [];
+            var listaId = [];
 
             return $http.get('/api/logconversation/treinamento')
                 .then(retornaChat)
@@ -57,9 +60,15 @@
                         retorno.push(jsonParam);
                     }
 
+                    if (!listaId.includes(item.response.context.conversation_id)){
+                        listaId.push(item.response.context.conversation_id);
+                    }
+
                     qtdChat = qtdChat + 1;
 
                 });
+
+                qtdConv = listaId.length;
 
                 if(retorno.length!=0){
                     retorno.push({selected: {}});
@@ -76,10 +85,14 @@
                 return $q.reject(error);
             }
 
-        }
+        };
 
         function retornaQdt(){
             return qtdChat;
+        };
+
+        function retornaQdtChat(){
+            return qtdConv;
         }
 
     }

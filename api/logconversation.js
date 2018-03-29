@@ -28,7 +28,8 @@ var logConversation = {
 
         conversation.listLogs(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.get Error: " + err);
+                //console.log(" logConversation.get Error: " + err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -44,7 +45,8 @@ var logConversation = {
 
         conversation.listEntities(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.getEntidades Error: " + err);
+                //console.log(" logConversation.getEntidades Error: " + err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -61,7 +63,8 @@ var logConversation = {
 
         conversation.listValues(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.getEntidadeValue Error: " + err);
+                //console.log(" logConversation.getEntidadeValue Error: " + err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -79,8 +82,8 @@ var logConversation = {
 
         conversation.createSynonym(params, function(err, response) {
             if (err) {
-                console.error(err);
-                console.log(" logConversation.criarSinônimo Error: " + err);
+                //console.log(" logConversation.criarSinônimo Error: " + err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -95,7 +98,8 @@ var logConversation = {
 
         conversation.listIntents(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.getIntencoes Error: "+JSON.parse(err));
+                //console.log(" logConversation.getIntencoes Error: "+JSON.parse(err));
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -117,7 +121,8 @@ var logConversation = {
 
         conversation.createIntent(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.treinaIntencao Error: " + err);
+                //console.log(" logConversation.treinaIntencao Error: " + err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }
@@ -138,7 +143,8 @@ var logConversation = {
 
         conversation.createEntity(params, function(err, response) {
             if (err) {
-                console.log(" logConversation.treinaIntencao Error: "+ err);
+                //console.log(" logConversation.treinaIntencao Error: "+ err);
+                res.status(200).json(err);
             } else {
                 res.status(200).json(response);
             }

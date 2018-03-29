@@ -142,7 +142,6 @@
 
             $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) {
 
-                //console.log("$stateChangeStart: " + message(to, toP, from, fromP));
                 if(to.restrictions.ensureAuthenticated) {
 
                     if (!$localStorage.token) {
@@ -154,7 +153,6 @@
                         $http.post('/api/validate',JSON.stringify(data),config).then(
                             function(response) {
                                 $location.path(to.name);
-                                //$location.path(to.data.caminho);
                             },
                             function(error){
                                 console.log('Erro:' + JSON.stringify(error.data.message));
