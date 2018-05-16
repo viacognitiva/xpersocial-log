@@ -1,7 +1,7 @@
 {
-  "name": "Abrale-log",
-  "version": "2.0.0",
-  "description": "Abrale Log",
+  "name": "XperSocial-Log",
+  "version": "1.0.0",
+  "description": "XperSocial Log",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

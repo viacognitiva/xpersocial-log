@@ -2,8 +2,7 @@ require('dotenv-safe').load();
 
 var Cloudant = require('cloudant');
 var express = require('express');
-var fs = require('fs');
-var request=require('request');
+var request = require('request');
 var http = require("http");
 
 var app = express();
@@ -38,7 +37,6 @@ var cloudant = {
     get : function(req, res) {
 
         var id = req.params.id;
-        console.log('id ='+id);
 
         db.get(id, function(err, data) {
             res.status(200).json(data);

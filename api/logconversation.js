@@ -8,7 +8,6 @@ app.set('port', process.env.PORT || 2000);
 
 var wts_username = process.env.WTS_USERNAME;
 var wts_password = process.env.WTS_PASSWORD;
-var apiHostname = process.env.APIHOSTNAME;
 var workspacesId = process.env.WORKSPACE_ID;
 var protocol = process.env.NODE_ENV == 'production' ? "https" : "http" ;
 
@@ -28,8 +27,8 @@ var logConversation = {
 
         conversation.listLogs(params, function(err, response) {
             if (err) {
-                //console.log(" logConversation.get Error: " + err);
-                res.status(200).json(err);
+                console.log(" logConversation.get: " + err);
+                res.status(500).json(err);
             } else {
                 res.status(200).json(response);
             }

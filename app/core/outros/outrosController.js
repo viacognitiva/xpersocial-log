@@ -29,7 +29,7 @@
 
             vm.sortType     = 'name';
             vm.sortReverse  = true;
-            $rootScope.showInfo = true;
+            $rootScope.showInfo = false;
 
             buscar();
 
