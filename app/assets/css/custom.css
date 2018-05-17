@@ -2,7 +2,7 @@ body{
     color: #666;
 }
 a {
-    color: #a81f42;
+    color: rgba(171, 5, 53, 1);
 }
 a:hover, a:active, a:focus {
     color: #333333;
@@ -10,7 +10,7 @@ a:hover, a:active, a:focus {
 .logoLogin{
     width:100%;
     text-align:center;
-    margin-bottom:30px;
+    margin:10px 0 30px;
 }
 .login-box, .register-box{
     margin:0 auto;
@@ -36,12 +36,10 @@ a:hover, a:active, a:focus {
 }
 .btn-primary, .btn-primary:focus,.btn-primary:active, .btn-primary[disabled]:hover{
     color: #fff;
-    background-color: #A81F42;
+    background-color: #848687;
     border:none;
 }
-.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover{
-    background-color: #A81F42;
-}
+
 .btn-primary:hover, .btn-primary:active, .btn-primary.hover {
     background-color: #444;
 }
@@ -64,7 +62,7 @@ a:hover, a:active, a:focus {
     color: #666;
 }
 .skin-blue .main-header .navbar{
-    background-color: #fcf1f0;
+    background-color: #F2F2F2;
 }
 .skin-blue .main-header .navbar .nav>li>a{
     color:#000;
@@ -76,12 +74,13 @@ a:hover, a:active, a:focus {
 .skin-blue .main-header .logo,.skin-blue .main-header .logo:hover {
     background-color: transparent;
     width:120px;
+    margin:7px
 }
 .box.box-primary {
     border-top-color: #fcf1f0;
 }
 .titulo{
-    color: #7c903d;
+    color: #000;
     font-weight:bold;
     font-size:30px;
     position:absolute;
@@ -127,4 +126,10 @@ th div{
   margin-left: -9px;
   line-height: normal;
   border-left: 1px solid #f4f4f4;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    font-size:15px
+}
+.label-danger{
+    background-color:#6285BC!important
 }

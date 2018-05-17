@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/xper-log.iml" filepath="$PROJECT_DIR$/.idea/xper-log.iml" />
+      <module fileurl="file://C:\Users\juliana.sayaka\IdeaProjects\xpersocial-log\.idea\xper-log.iml" filepath="C:\Users\juliana.sayaka\IdeaProjects\xpersocial-log\.idea\xper-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/xpersocial-log.iml" filepath="$PROJECT_DIR$/.idea/xpersocial-log.iml" />
     </modules>
   </component>
 </project>
